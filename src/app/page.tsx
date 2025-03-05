@@ -7,7 +7,7 @@ export default function Home() {
                 <p className="my-2 text-center">O programa de alertas para os funcionários da CCR</p>
 
                 {/* Seção de apresentação */}
-                <section className="flex flex-col items-center p-5 my-5 bg-[#999999] text-white rounded-lg shadow-md max-w-11/12 mx-auto w-full text-center">
+                <section className="flex flex-col items-center p-5 my-5 bg-[#999999] text-white rounded-lg shadow-md max-w-11/12 mx-auto w-4xl text-center">
                     <h2 className="text-3xl font-semibold mb-4">Como CCR Alertas pode transformar as operações</h2>
                     <p>O software CCR Alertas foi desenvolvido para melhorar a comunicação e a segurança operacional durante as
                         operações, garantindo a transmissão rápida, eficiente e precisa de informações críticas,
@@ -15,7 +15,7 @@ export default function Home() {
                 </section>
 
                 {/* Seção de vantagens */}
-                <section className="flex flex-col items-center p-5 my-5 bg-[#999999] text-white rounded-lg shadow-md max-w-11/12 mx-auto w-full text-center">
+                <section className="flex flex-col items-center p-5 my-5 bg-[#999999] text-white rounded-lg shadow-md max-w-11/12 mx-auto w-4xl text-center">
 
                     <h2 className="text-3xl font-semibold mb-2">Vantagens</h2>
 
@@ -51,7 +51,7 @@ export default function Home() {
                 </section>
 
                 {/* Seção de funcionalidades */}
-                <section className="flex flex-col items-center p-5 my-5 bg-[#999999] text-white rounded-lg shadow-md max-w-11/12 mx-auto w-full text-center">
+                <section className="flex flex-col items-center p-5 my-5 bg-[#999999] text-white rounded-lg shadow-md max-w-11/12 mx-auto w-4xl text-center">
 
                     <h2 className="text-3xl font-semibold mb-2">Funcionalidades</h2>
 
