@@ -3,19 +3,19 @@ import { Header } from "./components/header/header";
 import "./globals.css";
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <html lang="pt-br">
-      <body>
-        <Header />
+    return (
+        <html lang="pt-br">
+            <body>
+                <Header />
 
-        {children}
+                {children}
 
-        <Footer />
-      </body>
-    </html>
-  );
+                <Footer />
+            </body>
+        </html>
+    );
 }
