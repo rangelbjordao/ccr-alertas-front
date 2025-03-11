@@ -8,7 +8,7 @@ export function Header() {
             <header className="w-full bg-white py-6">
                 <div className="w-4xl max-w-11/12 mx-auto flex justify-between items-center">
                     <Link href="/" aria-label="Ir para a página inicial">
-                        <Image src="/images/logo-ccr.png" alt="Logo da CCR" width={75} height={75} className="max-w-[75px] max-h-[75px]"></Image>
+                        <Image src="/images/logo-ccr.png" alt="Logo da CCR" width={80} height={80} className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 max-w-full max-h-full"></Image>
                     </Link>
 
                     {/* Menu de navegação */}
