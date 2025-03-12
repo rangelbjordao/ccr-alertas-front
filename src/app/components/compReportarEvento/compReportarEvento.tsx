@@ -3,6 +3,8 @@
 import { useState } from "react";
 
 const CompReportarEventos = () => {
+
+    // Formatacao da data do evento
     const [dataEvento, setDataEvento] = useState("");
 
     const formatarData = (e: React.ChangeEvent<HTMLInputElement>) => {
