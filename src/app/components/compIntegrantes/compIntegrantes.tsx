@@ -4,8 +4,8 @@ import { FaLinkedin, FaGithub } from "react-icons/fa";
 const CompIntegrantes = () => {
     return (
         <>
-            <div className="text-center p-6">
-                <h1 className="text-3xl font-bold mb-6">Conheça Nossa Equipe</h1>
+            <main className="text-center p-6">
+                <h1 className="my-2 text-center text-3xl md:text-4xl font-bold">Conheça Nossa Equipe</h1>
 
                 <section className="flex flex-col items-center p-5 my-5 bg-neutral-400 text-white rounded-lg shadow-md max-w-11/12 mx-auto w-4xl text-center">
                     <h2 className="text-2xl font-semibold mb-4">Nossos Integrantes</h2>
@@ -84,7 +84,7 @@ const CompIntegrantes = () => {
                         <FaGithub />
                     </a>
                 </section>
-            </div>
+            </main>
         </>
     )
 }
