@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CCR Alertas
 
-## Getting Started
+## Sobre o Projeto
 
-First, run the development server:
+O **CCR Alertas** é um aplicativo desenvolvido para aprimorar a comunicação e a segurança operacional dos funcionários de trens e estações, permitindo a transmissão de informações críticas de maneira **rápida, eficiente e precisa**.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+O projeto visa facilitar a troca de informações em tempo real, garantindo maior segurança e eficiência nas operações ferroviárias.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Passos para o desenvolvimento do projeto
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Criação do Design Inicial** - O projeto começou com o design das telas no **Figma**, onde foram estruturadas as interfaces e definida a identidade visual.
+2. **Prototipação com HTML e CSS** - Após a criação do design, o projeto foi desenvolvido inicialmente utilizando **HTML e CSS** para estruturar e estilizar as páginas.
+3. **Migração para Next.js** - Com a base visual pronta, o projeto foi migrado para **Next.js**, permitindo um desenvolvimento mais dinâmico e escalável.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🖥️ Como Utilizar o Sistema
 
-## Learn More
+A página inicial do **CCR Alertas** apresenta as principais opções de navegação. O usuário pode interagir com os seguintes botões:
 
-To learn more about Next.js, take a look at the following resources:
+-   **Reportar Evento**: Acessa a página **Reportar Evento**, onde o funcionário pode registrar um novo evento.
+-   **Monitorar Eventos em Aberto**: Acessa a página **Monitorar Eventos em Aberto**, que exibe uma lista de eventos já reportados que ainda estão em andamento.
+-   **Solicitar Ajuda**: Acessa a página **Solicitar Ajuda**, que permite pedir assistência em caso de necessidade.
+-   **Histórico**: Acessa a página **Histórico**, para visualizar eventos que foram resolvidos.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 📌 Reportar Evento
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Para reportar um evento, o usuário deve seguir os seguintes passos:
 
-## Deploy on Vercel
+1. Acessar a página de **Reportar Evento**.
+2. Preencher os seguintes campos obrigatórios:
+    - **Título do Evento**: Um nome curto e objetivo para identificar o evento.
+    - **Descrição do Evento**: Informações detalhadas sobre o ocorrido.
+    - **Data do Evento**: Deve ser informada no formato **dd/mm/aaaa**.
+3. Clicar no botão **Enviar** para registrar o evento no sistema.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Após o envio, a equipe responsável poderá visualizar o evento reportado e tomar as providências necessárias.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 📌 Eventos em Aberto
+
+1. Acessar a página de **Monitorar Eventos em Aberto**.
+2. Visualizar a lista de eventos em aberto, onde cada um contém:
+    - **Data do Evento**
+    - **Descrição**
+    - **Local**
+    - **Status**
+3. O usuário pode acompanhar as atualizações de cada evento listado.
+
+### 📌 Solicitar Ajuda
+
+1. Acessar a página de **Solicitar Ajuda**.
+2. Selecionar um evento em aberto na lista disponível.
+3. Descrever a ajuda necessária.
+4. Clicar no botão **Enviar** para notificar a equipe responsável.
+
+### 📌 Histórico de Eventos
+
+1. Acessar a página de **Histórico**.
+2. Visualizar os eventos que já foram resolvidos, onde cada um contém:
+    - **Data do Evento**
+    - **Descrição**
+    - **Local**
+    - **Status**
+
+O sistema foi projetado para ser intuitivo e de fácil utilização, garantindo agilidade no acesso às informações.

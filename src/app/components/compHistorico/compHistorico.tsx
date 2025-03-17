@@ -22,7 +22,7 @@ const CompHistorico = () => {
                         <p className="m-2"><strong>Data:</strong> 20 de outubro de 2024</p>
                         <p className="m-2"><strong>Descrição:</strong> Descrição do segundo evento que foi resolvido.</p>
                         <p className="m-2"><strong>Local:</strong> Local do segundo evento resolvido</p>
-                        <p className="m-2"><strong>Status:</strong> Arquivado</p>
+                        <p className="m-2"><strong>Status:</strong> Resolvido</p>
                     </div>
                 </section>
             </main>
