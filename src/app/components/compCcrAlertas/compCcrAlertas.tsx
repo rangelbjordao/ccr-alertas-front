@@ -5,7 +5,7 @@ const CompCcrAlertas = () => {
         <>
 
             {/* Título principal */}
-            <main>
+            <main  className="mb-20">
                 <h1 className="my-2 text-center text-3xl md:text-4xl font-bold">CCR Alertas</h1>
 
                 {/* Botões */}

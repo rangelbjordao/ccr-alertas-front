@@ -2,7 +2,7 @@ const CompHistorico = () => {
     return (
         <>
             {/* Título principal */}
-            <main>
+            <main className="mb-20">
                 <h1 className="my-2 text-center text-3xl md:text-4xl font-bold">Histórico de Eventos</h1>
 
                 {/* Seção Histórico */}

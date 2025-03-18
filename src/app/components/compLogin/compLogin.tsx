@@ -1,51 +1,39 @@
+import Link from "next/link"
+
 const CompLogin = () => {
-  return (
-    <>
-      {/* Título principal */}
-      <main>
-        <h1 className="my-2 text-center text-3xl md:text-4xl font-bold">
-          Monitorar Eventos
-        </h1>
+    return (
+        <>
 
-        {/* Seção eventos abertos */}
-        <section className="flex flex-col items-center p-5 my-5 bg-neutral-400 text-white rounded-lg shadow-md max-w-11/12 mx-auto w-4xl text-center">
-          <h2 className="text-2xl font-semibold mb-4">Eventos em Aberto</h2>
+            {/* Título principal */}
+            <main className="mb-20">
+                <h1 className="my-2 text-center text-3xl md:text-4xl font-bold">CCR Alertas</h1>
 
-          <div className="w-full max-w-3xl bg-white text-black p-4 rounded-md shadow-md mb-4">
-            <h3 className="text-xl font-bold text-red-700 mb-5">Evento 1</h3>
-            <p className="m-2">
-              <strong>Data:</strong> 31 de outubro de 2024
-            </p>
-            <p className="m-2">
-              <strong>Descrição:</strong> Breve descrição do evento reportado.
-            </p>
-            <p className="m-2">
-              <strong>Local:</strong> Local do evento
-            </p>
-            <p className="m-2">
-              <strong>Status:</strong> Aguardando avaliação
-            </p>
-          </div>
+                {/* Botões */}
+                <section className="flex flex-col items-center p-5 my-5 bg-neutral-400 text-white rounded-lg shadow-md max-w-11/12 mx-auto w-4xl text-center">
+                    <Link href="/reportar-eventos">
+                        <button className="bg-red-700 text-white border border-gray-800 rounded-md px-5 py-3 m-2 text-base cursor-pointer w-64 transition-colors duration-300 hover:bg-red-900 hover:border-gray-600">
+                            Reportar Evento
+                        </button>
+                    </Link>
+                    <Link href="/monitorar-eventos">
+                        <button className="bg-red-700 text-white border border-gray-800 rounded-md px-5 py-3 m-2 text-base cursor-pointer w-64 transition-colors duration-300 hover:bg-red-900 hover:border-gray-600">
+                            Monitorar Eventos em Aberto
+                        </button>
+                    </Link>
+                    <Link href="/solicitar-ajuda">
+                        <button className="bg-red-700 text-white border border-gray-800 rounded-md px-5 py-3 m-2 text-base cursor-pointer w-64 transition-colors duration-300 hover:bg-red-900 hover:border-gray-600">
+                            Solicitar Ajuda
+                        </button>
+                    </Link>
+                    <Link href="/historico">
+                        <button className="bg-red-700 text-white border border-gray-800 rounded-md px-5 py-3 m-2 text-base cursor-pointer w-64 transition-colors duration-300 hover:bg-red-900 hover:border-gray-600">
+                            Histórico
+                        </button>
+                    </Link>
+                </section>
+            </main>
+        </>
+    )
+}
 
-          <div className="w-full max-w-3xl bg-white text-black p-4 rounded-md shadow-md">
-            <h3 className="text-xl font-bold text-red-700 mb-5">Evento 2</h3>
-            <p className="m-2">
-              <strong>Data:</strong> 30 de outubro de 2024
-            </p>
-            <p className="m-2">
-              <strong>Descrição:</strong> Outra descrição do evento reportado.
-            </p>
-            <p className="m-2">
-              <strong>Local:</strong> Local do segundo evento
-            </p>
-            <p className="m-2">
-              <strong>Status:</strong> Em progresso
-            </p>
-          </div>
-        </section>
-      </main>
-    </>
-  );
-};
-
-export default CompLogin;
+export default CompLogin
