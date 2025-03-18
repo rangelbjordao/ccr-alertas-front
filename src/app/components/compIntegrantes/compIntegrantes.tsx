@@ -1,11 +1,10 @@
 import Image from "next/image";
-import Link from "next/link";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 
 const CompIntegrantes = () => {
   return (
     <>
-      <main className="mb-20">
+      <main>
         <h1 className="my-2 text-center text-3xl md:text-4xl font-bold">
           Conheça Nossa Equipe
         </h1>
@@ -93,11 +92,6 @@ const CompIntegrantes = () => {
             <FaGithub />
           </a>
         </section>
-        {
-          <Link className="text-black px-4 py-1 hover:underline" href="/login">
-            Login
-          </Link>
-        }
       </main>
     </>
   );

@@ -3,7 +3,7 @@ export function Footer() {
 
     return (
         <>
-            <footer className="text-center py-3 bg-neutral-400 text-white fixed bottom-0 inset-x-0">
+            <footer className="text-center py-1 bg-neutral-400 text-white mt-auto bottom-0 inset-x-0">
                 <p>&copy; {anoAtual} CCR</p>
             </footer>
         </>
