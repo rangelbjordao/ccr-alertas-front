@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 
 const CompIntegrantes = () => {
@@ -97,13 +96,6 @@ const CompIntegrantes = () => {
             <FaGithub />
           </a>
         </section>
-
-        <Link
-          className="text-black px-2 hover:underline"
-          href="/login"
-        >
-          login
-        </Link>
       </main>
     </>
   );
