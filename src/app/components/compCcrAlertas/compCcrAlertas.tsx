@@ -1,6 +1,20 @@
+"use client";
+
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect } from "react";
 
 const CompCcrAlertas = () => {
+    const router = useRouter();
+
+    useEffect(() => {
+        const token = localStorage.getItem("authToken");
+
+        if (!token || token.trim() === "") {
+            router.push("/login");
+        }
+    }, []);
+
     return (
         <>
 

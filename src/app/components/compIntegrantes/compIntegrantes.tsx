@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 
 const CompIntegrantes = () => {
@@ -10,7 +11,9 @@ const CompIntegrantes = () => {
         </h1>
 
         <section className="flex flex-col items-center p-5 my-5 bg-neutral-400 text-white rounded-lg shadow-md max-w-11/12 mx-auto w-4xl text-center">
-          <h2 className="text-2xl font-semibold mb-4">Nossos Integrantes</h2>
+          <h2 className="text-2xl font-semibold mb-4">
+            Nossos Integrantes
+          </h2>
           <div>
             <article>
               <Image
@@ -82,7 +85,9 @@ const CompIntegrantes = () => {
             </article>
           </div>
 
-          <h2 className="text-2xl font-semibold mt-8">GitHub da equipe</h2>
+          <h2 className="text-2xl font-semibold mt-8">
+            GitHub da equipe
+          </h2>
           <a
             href="https://github.com/signalProteam"
             target="_blank"
@@ -92,6 +97,13 @@ const CompIntegrantes = () => {
             <FaGithub />
           </a>
         </section>
+
+        <Link
+          className="text-black px-2 hover:underline"
+          href="/login"
+        >
+          login
+        </Link>
       </main>
     </>
   );
