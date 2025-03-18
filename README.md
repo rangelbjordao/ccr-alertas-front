@@ -14,6 +14,13 @@ O projeto visa facilitar a troca de informações em tempo real, garantindo maio
 
 ## 🖥️ Como Utilizar o Sistema
 
+## 🔑 Credenciais Padrão
+
+Para acessar o sistema, utilize as seguintes credenciais:
+
+-   **RO:** admin
+-   **Senha:** admin
+
 A página inicial do **CCR Alertas** apresenta as principais opções de navegação. O usuário pode interagir com os seguintes botões:
 
 -   **Reportar Evento**: Acessa a página **Reportar Evento**, onde o funcionário pode registrar um novo evento.
