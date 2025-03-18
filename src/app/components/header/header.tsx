@@ -29,7 +29,7 @@ export function Header() {
               <li>
                 <Link
                   className="text-black px-4 py-1 hover:underline"
-                  href="/ccr-alertas"
+                  href="/login"
                 >
                   CCR Alertas
                 </Link>
