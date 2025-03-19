@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogIn, BiLogOut } from "react-icons/bi";
 
 export function Header() {
     const [logado, setLogado] = useState(false);
@@ -32,6 +32,10 @@ export function Header() {
         router.push("/");
     };
 
+    const handleLogin = () => {
+        router.push("/login");
+    };
+
     const handleProtectedRoute = (e: React.MouseEvent) => {
         if (!logado) {
             e.preventDefault();
@@ -41,15 +45,27 @@ export function Header() {
 
     return (
         <>
-            {/* Botão de Logout */}
-            {!loading && logado && (
-                <button
-                    onClick={handleLogout}
-                    className="fixed top-2 right-2 hover:underline hover:cursor-pointer flex items-center gap-2 text-sm sm:text-base md:text-lg lg:text-xl"
-                >
-                    Logout
-                    <BiLogOut />
-                </button>
+            {/* Botão de Login e Logout */}
+            {!loading && (
+                <>
+                    {!logado ? (
+                        <button
+                            onClick={handleLogin}
+                            className="fixed top-2 right-2 hover:underline hover:cursor-pointer flex items-center gap-2 text-sm sm:text-base md:text-lg lg:text-xl"
+                        >
+                            Login
+                            <BiLogIn />
+                        </button>
+                    ) : (
+                        <button
+                            onClick={handleLogout}
+                            className="fixed top-2 right-2 hover:underline hover:cursor-pointer flex items-center gap-2 text-sm sm:text-base md:text-lg lg:text-xl"
+                        >
+                            Logout
+                            <BiLogOut />
+                        </button>
+                    )}
+                </>
             )}
 
             <header className="w-full bg-white py-6 text-sm sm:text-base md:text-lg lg:text-xl">
