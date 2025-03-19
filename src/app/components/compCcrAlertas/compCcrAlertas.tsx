@@ -18,7 +18,6 @@ const CompCcrAlertas = () => {
     return (
         <>
 
-            {/* Título principal */}
             <main>
                 <h1 className="my-2 text-center text-3xl md:text-4xl font-bold">CCR Alertas</h1>
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { BiLogIn, BiLogOut } from "react-icons/bi";
+import { BiUser } from "react-icons/bi";
 
 export function Header() {
     const [logado, setLogado] = useState(false);
@@ -29,7 +29,7 @@ export function Header() {
     const handleLogout = () => {
         localStorage.removeItem("authToken");
         setLogado(false);
-        router.push("/");
+        router.push("/login");
     };
 
     const handleLogin = () => {
@@ -47,25 +47,15 @@ export function Header() {
         <>
             {/* Botão de Login e Logout */}
             {!loading && (
-                <>
-                    {!logado ? (
-                        <button
-                            onClick={handleLogin}
-                            className="fixed top-2 right-2 hover:underline hover:cursor-pointer flex items-center gap-2 text-sm sm:text-base md:text-lg lg:text-xl"
-                        >
-                            Login
-                            <BiLogIn />
-                        </button>
-                    ) : (
-                        <button
-                            onClick={handleLogout}
-                            className="fixed top-2 right-2 hover:underline hover:cursor-pointer flex items-center gap-2 text-sm sm:text-base md:text-lg lg:text-xl"
-                        >
-                            Logout
-                            <BiLogOut />
-                        </button>
-                    )}
-                </>
+                <div className="fixed top-2 right-2 flex flex-col items-end">
+                    <button
+                        onClick={logado ? handleLogout : handleLogin}
+                        className="flex items-center gap-2 bg-gray-200 px-3 py-1 rounded-md text-gray-700 hover:bg-gray-300 transition hover:cursor-pointer text-sm sm:text-base md:text-lg lg:text-xl"
+                    >
+                        <BiUser className="text-lg" />
+                        {logado ? "Logout" : "Login"}
+                    </button>
+                </div>
             )}
 
             <header className="w-full bg-white py-6 text-sm sm:text-base md:text-lg lg:text-xl">
@@ -89,17 +79,11 @@ export function Header() {
                                     Início
                                 </Link>
                             </li>
-
                             <li>
-                                <Link
-                                    className="text-black px-2 hover:underline"
-                                    href="/ccr-alertas"
-                                    onClick={handleProtectedRoute}
-                                >
+                                <Link className="text-black px-2 hover:underline" href="/ccr-alertas" onClick={handleProtectedRoute}>
                                     CCR Alertas
                                 </Link>
                             </li>
-
                             <li>
                                 <Link className="text-black px-2 hover:underline" href="/integrantes">
                                     Integrantes
