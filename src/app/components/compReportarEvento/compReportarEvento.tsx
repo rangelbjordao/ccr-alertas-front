@@ -6,9 +6,10 @@ const CompReportarEventos = () => {
 
     // Formatacao da data do evento
     const [dataEvento, setDataEvento] = useState("");
-    const [erroCampos, setErroCampos] = useState({ titulo: false, descricao: false, data: false });
+    const [erroCampos, setErroCampos] = useState({ titulo: false, descricao: false, data: false, cargo: false });
     const [mensagemErro, setMensagemErro] = useState("");
     const [mensagemSucesso, setMensagemSucesso] = useState("");
+    const [cargoSelecionado, setCargoSelecionado] = useState("");
 
     const formatarData = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value.replace(/\D/g, "");
@@ -23,23 +24,22 @@ const CompReportarEventos = () => {
         setDataEvento(value);
     };
 
+    const [titulo, setTitulo] = useState("");
+    const [descricao, setDescricao] = useState("");
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const tituloInput = document.getElementById("titulo-evento") as HTMLInputElement;
-        const descricaoInput = document.getElementById("descricao-evento") as HTMLTextAreaElement;
-        const titulo = tituloInput.value.trim();
-        const descricao = descricaoInput.value.trim();
-        const data = dataEvento.trim();
 
         const novosErros = {
-            titulo: titulo === "",
-            descricao: descricao === "",
-            data: data.length !== 10
+            titulo: titulo.trim() === "",
+            cargo: cargoSelecionado === "",
+            descricao: descricao.trim() === "",
+            data: dataEvento.trim().length !== 10
         };
 
         setErroCampos(novosErros);
 
-        if (novosErros.titulo || novosErros.descricao || novosErros.data) {
+        if (Object.values(novosErros).includes(true)) {
             setMensagemErro("Por favor, preencha todos os campos corretamente.");
             setMensagemSucesso("");
             return;
@@ -48,16 +48,19 @@ const CompReportarEventos = () => {
         setMensagemErro("");
         setMensagemSucesso("Evento reportado com sucesso!");
 
-        tituloInput.value = "";
-        descricaoInput.value = "";
+        setTitulo("");
+        setCargoSelecionado("");
+        setDescricao("");
         setDataEvento("");
     };
+
+
 
     return (
         <>
             <main>
                 <h1 className="my-2 text-center text-3xl md:text-4xl font-bold">Reportar Evento</h1>
-                
+
                 {/* Formulário para reportar evento */}
                 <section className="flex flex-col items-center p-5 my-5 bg-neutral-400 text-white rounded-lg shadow-md max-w-11/12 mx-auto w-4xl text-center">
                     <form className="w-full max-w-md" onSubmit={handleSubmit}>
@@ -67,8 +70,26 @@ const CompReportarEventos = () => {
                                 type="text"
                                 id="titulo-evento"
                                 name="titulo-evento"
+                                value={titulo}
+                                onChange={(e) => setTitulo(e.target.value)}
                                 className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.titulo ? 'border-2 border-red-500' : ''}`}
                             />
+                        </div>
+
+                        <div className="flex flex-col mb-4">
+                            <label htmlFor="selecionar-cargo" className="mb-2">Selecionar Cargo:</label>
+                            <select
+                                id="selecionar-cargo"
+                                name="selecionar-cargo"
+                                value={cargoSelecionado}
+                                onChange={(e) => setCargoSelecionado(e.target.value)}
+                                className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.cargo ? 'border-2 border-red-500' : ''}`}
+                            >
+                                <option value="">-- Selecione um cargo --</option>
+                                <option value="seguranca">Segurança</option>
+                                <option value="limpeza">Limpeza</option>
+                                <option value="manutencao">Manutenção</option>
+                            </select>
                         </div>
 
                         <div className="flex flex-col mb-4">
@@ -76,6 +97,8 @@ const CompReportarEventos = () => {
                             <textarea
                                 id="descricao-evento"
                                 name="descricao-evento"
+                                value={descricao}
+                                onChange={(e) => setDescricao(e.target.value)}
                                 className={`p-2 text-black rounded-md w-11/12 h-36 resize-none bg-white mx-auto ${erroCampos.descricao ? 'border-2 border-red-500' : ''}`}
                             ></textarea>
                         </div>

@@ -35,6 +35,7 @@ Para reportar um evento, o usuário deve seguir os seguintes passos:
 1. Acessar a página de **Reportar Evento**.
 2. Preencher os seguintes campos obrigatórios:
     - **Título do Evento**: Um nome curto e objetivo para identificar o evento.
+    - **Selecionar Cargo**: Escolha o cargo responsável para lidar com o evento.
     - **Descrição do Evento**: Informações detalhadas sobre o ocorrido.
     - **Data do Evento**: Deve ser informada no formato **dd/mm/aaaa**.
 3. Clicar no botão **Enviar** para registrar o evento no sistema.
