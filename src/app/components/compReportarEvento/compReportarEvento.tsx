@@ -116,8 +116,8 @@ const CompReportarEventos = () => {
                             />
                         </div>
 
-                        {mensagemErro && <p className="text-red-500 font-bold font-sans">{mensagemErro}</p>}
-                        {mensagemSucesso && <p className="text-blue-800 font-bold font-sans">{mensagemSucesso}</p>}
+                        {mensagemErro && <p className="text-red-500 font-bold">{mensagemErro}</p>}
+                        {mensagemSucesso && <p className="text-blue-800 font-bold">{mensagemSucesso}</p>}
 
                         <button
                             type="submit"
