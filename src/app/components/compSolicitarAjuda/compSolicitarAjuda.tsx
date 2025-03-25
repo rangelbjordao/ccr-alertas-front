@@ -67,8 +67,8 @@ const CompSolicitarAjuda = () => {
                             ></textarea>
                         </div>
 
-                        {mensagemErro && <p className="text-red-500 font-">{mensagemErro}</p>}
-                        {mensagemSucesso && <p className="text-green-500">{mensagemSucesso}</p>}
+                        {mensagemErro && <p className="text-red-500 font-bold font-sans">{mensagemErro}</p>}
+                        {mensagemSucesso && <p className="text-blue-800 font-bold font-sans">{mensagemSucesso}</p>}
 
                         <button type="submit" className="bg-red-700 text-white border border-gray-800 rounded-md px-5 py-3 m-2 text-base cursor-pointer w-64 transition-colors duration-300 hover:bg-red-900 hover:border-gray-600 mx-auto">
                             Enviar
