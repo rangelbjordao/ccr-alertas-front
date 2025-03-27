@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from "react";
+import Botao from "../botao/botao";
 
 const CompReportarEventos = () => {
 
@@ -119,12 +120,7 @@ const CompReportarEventos = () => {
                         {mensagemErro && <p className="text-red-500 font-bold">{mensagemErro}</p>}
                         {mensagemSucesso && <p className="text-blue-800 font-bold">{mensagemSucesso}</p>}
 
-                        <button
-                            type="submit"
-                            className="bg-red-700 text-white border border-gray-800 rounded-md px-5 py-3 m-2 text-base cursor-pointer w-64 transition-colors duration-300 hover:bg-red-900 hover:border-gray-600 mx-auto"
-                        >
-                            Enviar
-                        </button>
+                        <Botao type="submit" texto="Enviar" />
                     </form>
                 </section>
             </main>

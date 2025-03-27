@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from "react";
+import Botao from "../botao/botao";
 
 const CompSolicitarAjuda = () => {
     const [eventoSelecionado, setEventoSelecionado] = useState("");
@@ -36,7 +37,7 @@ const CompSolicitarAjuda = () => {
         <>
             <main>
                 <h1 className="my-2 text-center text-3xl md:text-4xl font-bold">Solicitar Ajuda</h1>
-                
+
                 {/* Formulario solicitar ajuda */}
                 <section className="flex flex-col items-center p-5 my-5 bg-neutral-400 text-white rounded-lg shadow-md max-w-11/12 mx-auto w-4xl text-center">
                     <form className="w-full max-w-md" onSubmit={handleSubmit}>
@@ -70,9 +71,7 @@ const CompSolicitarAjuda = () => {
                         {mensagemErro && <p className="text-red-500 font-bold">{mensagemErro}</p>}
                         {mensagemSucesso && <p className="text-blue-800 font-bold">{mensagemSucesso}</p>}
 
-                        <button type="submit" className="bg-red-700 text-white border border-gray-800 rounded-md px-5 py-3 m-2 text-base cursor-pointer w-64 transition-colors duration-300 hover:bg-red-900 hover:border-gray-600 mx-auto">
-                            Enviar
-                        </button>
+                        <Botao type="submit" texto="Enviar" />
                     </form>
                 </section>
             </main>
