@@ -9,6 +9,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="pt-br">
+            <title>CCR</title>
             <body className="font-[Arial] text-lg m-0 p-0 leading-relaxed text-black bg-neutral-50 min-h-screen flex flex-col">
                 <Header />
 
