@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Botao from "../botao/botao";
+import { enviarEvento } from "@/app/services/api";
 
 const CompReportarEventos = () => {
 
@@ -28,7 +29,7 @@ const CompReportarEventos = () => {
     const [titulo, setTitulo] = useState("");
     const [descricao, setDescricao] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const novosErros = {
@@ -46,13 +47,26 @@ const CompReportarEventos = () => {
             return;
         }
 
-        setMensagemErro("");
-        setMensagemSucesso("Evento reportado com sucesso!");
+        try {
+            const resultado = await enviarEvento({
+                titulo,
+                descricao,
+                cargo: cargoSelecionado,
+                data: dataEvento
+            });
 
-        setTitulo("");
-        setCargoSelecionado("");
-        setDescricao("");
-        setDataEvento("");
+            if (resultado.sucesso) {
+                setMensagemErro("");
+                setMensagemSucesso("Evento reportado com sucesso!");
+                setTitulo("");
+                setCargoSelecionado("");
+                setDescricao("");
+                setDataEvento("");
+            }
+        } catch (error) {
+            setMensagemErro("Erro ao enviar o evento.");
+            setMensagemSucesso("");
+        }
     };
 
 
