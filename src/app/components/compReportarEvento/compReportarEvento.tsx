@@ -2,26 +2,14 @@
 
 import { useState } from "react";
 import Botao from "../botao/botao";
-import { enviarEvento, Evento } from "@/app/services/api";
+import { enviarEvento } from "@/app/services/api";
 
 const CompReportarEventos = () => {
 
-    const [erroCampos, setErroCampos] = useState({ titulo: false, descricao: false, data: false, cargo: false });
+    const [erroCampos, setErroCampos] = useState({ titulo: false, descricao: false, cargo: false });
     const [mensagemErro, setMensagemErro] = useState("");
     const [mensagemSucesso, setMensagemSucesso] = useState("");
     const [cargoSelecionado, setCargoSelecionado] = useState("");
-    const [eventos, setEventos] = useState<Evento[]>([]);
-
-    const formatarData = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let value = e.target.value.replace(/\D/g, "");
-
-        if (value.length >= 2) {
-            value = value.slice(0, 2) + "/" + value.slice(2);
-        }
-        if (value.length >= 5) {
-            value = value.slice(0, 5) + "/" + value.slice(5, 9);
-        }
-    };
 
     const [titulo, setTitulo] = useState("");
     const [descricao, setDescricao] = useState("");
@@ -32,8 +20,7 @@ const CompReportarEventos = () => {
         const novosErros = {
             titulo: titulo.trim() === "",
             cargo: cargoSelecionado === "",
-            descricao: descricao.trim() === "",
-            data: false
+            descricao: descricao.trim() === ""
         };
 
         setErroCampos(novosErros);
