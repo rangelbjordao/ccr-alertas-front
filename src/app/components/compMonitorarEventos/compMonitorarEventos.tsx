@@ -1,18 +1,22 @@
 'use client'
 
-import { atualizarStatusEvento, buscarEventos, Evento } from "@/app/services/api"
+import { atualizarStatusEvento, buscarEventos, carregarEventos, Evento } from "@/app/services/api"
 import { useEffect, useState } from "react"
 
 const CompMonitorarEventos = () => {
     const [eventos, setEventos] = useState<Evento[]>([]);
 
     useEffect(() => {
-        const carregarEventos = async () => {
-            const dados = await buscarEventos();
-            setEventos(dados.filter(ev => ev.status !== "Resolvido"));
+        const mostrarEventos = async () => {
+            try {
+                const eventosNaoResolvidos = await carregarEventos(["Em andamento", "Sem resposta"]);
+                setEventos(eventosNaoResolvidos);
+            } catch (error) {
+                console.error("Erro ao carregar eventos:", error);
+            }
         };
 
-        carregarEventos();
+        mostrarEventos();
     }, []);
 
     async function mudarStatus(id: number, novoStatus: "Sem resposta" | "Em andamento" | "Resolvido") {

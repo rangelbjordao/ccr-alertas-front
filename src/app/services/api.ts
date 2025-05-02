@@ -22,12 +22,41 @@ let eventosFalsos: Evento[] = [
         data: "31/10/2024",
         cargo: "Segurança",
         descricao: "Dois passageiros iniciaram uma discussão na plataforma.",
-        status: "Sem resposta"
+        status: "Em andamento"
+    },
+    {
+        id: 3,
+        titulo: "Problema na Iluminação",
+        data: "25/10/2024",
+        cargo: "Manutenção",
+        descricao: "Lâmpada queimada na estação.",
+        status: "Resolvido"
     }
 ]
+
 export async function buscarEventos(): Promise<Evento[]> {
     await new Promise((res) => setTimeout(res, 300));
     return eventosFalsos;
+}
+
+function dataFormatada(data: string): Date {
+    const [dia, mes, ano] = data.split("/").map(Number);
+    return new Date(ano, mes - 1, dia);
+}
+
+export function ordenaEventosPorData(eventos: Evento[]): Evento[] {
+    const listaEventos = [...eventos];
+    return listaEventos.sort((a, b) => {
+        const dataA = dataFormatada(a.data);
+        const dataB = dataFormatada(b.data);
+        return dataB.getTime() - dataA.getTime();
+    });
+}
+
+export async function carregarEventos(status: ("Resolvido" | "Em andamento" | "Sem resposta")[]): Promise<Evento[]> {
+    const eventos = await buscarEventos();
+    const eventosFiltrados = eventos.filter(evento => status.includes(evento.status));
+    return ordenaEventosPorData(eventosFiltrados);
 }
 
 export async function enviarEvento(evento: Omit<Evento, "id" | "status">): Promise<{ sucesso: boolean }> {
@@ -35,7 +64,7 @@ export async function enviarEvento(evento: Omit<Evento, "id" | "status">): Promi
 
     console.log("Evento recebido (mock):", evento);
 
-    eventosFalsos.push({
+    eventosFalsos.unshift({
         id: eventosFalsos.length + 1,
         ...evento,
         status: "Sem resposta"

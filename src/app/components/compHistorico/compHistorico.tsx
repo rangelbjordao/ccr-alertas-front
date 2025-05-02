@@ -1,20 +1,24 @@
 'use client'
 
-import { buscarEventos, Evento } from "@/app/services/api";
+import { buscarEventos, carregarEventos, Evento } from "@/app/services/api";
 import { useEffect, useState } from "react";
 
 const CompHistorico = () => {
     const [eventos, setEventos] = useState<Evento[]>([])
 
     useEffect(() => {
-        async function carregarEventos() {
-            const dados = await buscarEventos()
-            const resolvidos = dados.filter(evento => evento.status === "Resolvido")
-            setEventos(resolvidos)
-        }
+        const mostrarEventos = async () => {
+            try {
+                const eventosResolvidos = await carregarEventos(["Resolvido"]);
+                setEventos(eventosResolvidos);
+            } catch (error) {
+                console.error("Erro ao carregar eventos:", error);
+            }
+        };
 
-        carregarEventos()
-    }, [])
+        mostrarEventos();
+    }, []);
+
 
     return (
         <>

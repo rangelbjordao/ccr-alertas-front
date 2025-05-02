@@ -10,7 +10,6 @@ const CompReportarEventos = () => {
     const [mensagemErro, setMensagemErro] = useState("");
     const [mensagemSucesso, setMensagemSucesso] = useState("");
     const [cargoSelecionado, setCargoSelecionado] = useState("");
-
     const [titulo, setTitulo] = useState("");
     const [descricao, setDescricao] = useState("");
 
@@ -51,8 +50,6 @@ const CompReportarEventos = () => {
             setMensagemSucesso("");
         }
     };
-
-
 
     return (
         <>
