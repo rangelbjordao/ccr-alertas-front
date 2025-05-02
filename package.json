@@ -1,5 +1,5 @@
 {
-    "name": "sprint-3-front",
+    "name": "sprint-4-front",
     "version": "0.1.0",
     "private": true,
     "scripts": {
@@ -9,7 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "next": "15.2.1",
+        "next": "^15.3.1",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-icons": "^5.5.0"
@@ -31,14 +31,14 @@
     "main": "index.js",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/rangelbjordao/sprint-3-front.git"
+        "url": "git+https://github.com/rangelbjordao/sprint-4-front.git"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "type": "module",
     "bugs": {
-        "url": "https://github.com/rangelbjordao/sprint-3-front/issues"
+        "url": "https://github.com/rangelbjordao/sprint-4-front/issues"
     },
-    "homepage": "https://github.com/rangelbjordao/sprint-3-front#readme"
+    "homepage": "https://github.com/rangelbjordao/sprint-4-front#readme"
 }
