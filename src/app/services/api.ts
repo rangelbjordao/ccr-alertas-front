@@ -1,10 +1,8 @@
-// lib/api.ts
-
 export type Evento = {
     id: number;
     titulo: string;
     descricao: string;
-    data: string; // formato dd/mm/aaaa
+    data: string;
     cargo: string;
     status: "Sem resposta" | "Resolvido" | "Em andamento";
 };

@@ -2,16 +2,15 @@
 
 import { useState } from "react";
 import Botao from "../botao/botao";
-import { enviarEvento } from "@/app/services/api";
+import { enviarEvento, Evento } from "@/app/services/api";
 
 const CompReportarEventos = () => {
 
-    // Formatacao da data do evento
-    const [dataEvento, setDataEvento] = useState("");
     const [erroCampos, setErroCampos] = useState({ titulo: false, descricao: false, data: false, cargo: false });
     const [mensagemErro, setMensagemErro] = useState("");
     const [mensagemSucesso, setMensagemSucesso] = useState("");
     const [cargoSelecionado, setCargoSelecionado] = useState("");
+    const [eventos, setEventos] = useState<Evento[]>([]);
 
     const formatarData = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value.replace(/\D/g, "");
@@ -22,8 +21,6 @@ const CompReportarEventos = () => {
         if (value.length >= 5) {
             value = value.slice(0, 5) + "/" + value.slice(5, 9);
         }
-
-        setDataEvento(value);
     };
 
     const [titulo, setTitulo] = useState("");
@@ -36,7 +33,7 @@ const CompReportarEventos = () => {
             titulo: titulo.trim() === "",
             cargo: cargoSelecionado === "",
             descricao: descricao.trim() === "",
-            data: dataEvento.trim().length !== 10
+            data: false
         };
 
         setErroCampos(novosErros);
@@ -52,7 +49,7 @@ const CompReportarEventos = () => {
                 titulo,
                 descricao,
                 cargo: cargoSelecionado,
-                data: dataEvento
+                data: new Date().toLocaleDateString("pt-BR")
             });
 
             if (resultado.sucesso) {
@@ -61,7 +58,6 @@ const CompReportarEventos = () => {
                 setTitulo("");
                 setCargoSelecionado("");
                 setDescricao("");
-                setDataEvento("");
             }
         } catch (error) {
             setMensagemErro("Erro ao enviar o evento.");
@@ -116,19 +112,6 @@ const CompReportarEventos = () => {
                                 onChange={(e) => setDescricao(e.target.value)}
                                 className={`p-2 text-black rounded-md w-11/12 h-36 resize-none bg-white mx-auto ${erroCampos.descricao ? 'border-2 border-red-500' : ''}`}
                             ></textarea>
-                        </div>
-
-                        <div className="flex flex-col mb-4">
-                            <label htmlFor="data-evento" className="mb-2">Data do Evento (dd/mm/aaaa):</label>
-                            <input
-                                type="text"
-                                id="data-evento"
-                                name="data-evento"
-                                placeholder="dd/mm/aaaa"
-                                className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.data ? 'border-2 border-red-500' : ''}`}
-                                value={dataEvento}
-                                onChange={formatarData}
-                            />
                         </div>
 
                         {mensagemErro && <p className="text-red-500 font-bold">{mensagemErro}</p>}
