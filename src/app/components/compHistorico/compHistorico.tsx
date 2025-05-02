@@ -9,7 +9,7 @@ const CompHistorico = () => {
     useEffect(() => {
         async function carregarEventos() {
             const dados = await buscarEventos()
-            const resolvidos = dados.filter(evento => evento.status === "resolvido")
+            const resolvidos = dados.filter(evento => evento.status === "Resolvido")
             setEventos(resolvidos)
         }
 

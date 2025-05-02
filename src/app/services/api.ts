@@ -6,7 +6,7 @@ export type Evento = {
     descricao: string;
     data: string; // formato dd/mm/aaaa
     cargo: string;
-    status: "aberto" | "resolvido" | "em andamento";
+    status: "Sem resposta" | "Resolvido" | "Em andamento";
 };
 
 let eventosFalsos: Evento[] = [
@@ -16,7 +16,7 @@ let eventosFalsos: Evento[] = [
         data: "30/10/2024",
         cargo: "Manutenção",
         descricao: "Escada rolante parou de funcionar repentinamente.",
-        status: "aberto"
+        status: "Sem resposta"
     },
     {
         id: 2,
@@ -24,7 +24,7 @@ let eventosFalsos: Evento[] = [
         data: "31/10/2024",
         cargo: "Segurança",
         descricao: "Dois passageiros iniciaram uma discussão na plataforma.",
-        status: "aberto"
+        status: "Sem resposta"
     }
 ]
 export async function buscarEventos(): Promise<Evento[]> {
@@ -40,7 +40,7 @@ export async function enviarEvento(evento: Omit<Evento, "id" | "status">): Promi
     eventosFalsos.push({
         id: eventosFalsos.length + 1,
         ...evento,
-        status: "aberto"
+        status: "Sem resposta"
     });
 
     return { sucesso: true };

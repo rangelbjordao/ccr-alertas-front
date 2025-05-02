@@ -9,16 +9,16 @@ const CompMonitorarEventos = () => {
     useEffect(() => {
         const carregarEventos = async () => {
             const dados = await buscarEventos();
-            setEventos(dados.filter(ev => ev.status !== "resolvido"));
+            setEventos(dados.filter(ev => ev.status !== "Resolvido"));
         };
 
         carregarEventos();
     }, []);
 
-    async function mudarStatus(id: number, novoStatus: "aberto" | "em andamento" | "resolvido") {
+    async function mudarStatus(id: number, novoStatus: "Sem resposta" | "Em andamento" | "Resolvido") {
         await atualizarStatusEvento(id, novoStatus);
         const atualizados = await buscarEventos();
-        setEventos(atualizados.filter(ev => ev.status !== "resolvido"));
+        setEventos(atualizados.filter(ev => ev.status !== "Resolvido"));
     }
 
     return (
@@ -41,10 +41,10 @@ const CompMonitorarEventos = () => {
                             <p><strong>Status:</strong> {evento.status}</p>
 
                             <div className="flex flex-wrap justify-center gap-2 mt-3">
-                                {evento.status !== "em andamento" && (
+                                {evento.status !== "Em andamento" && (
                                     <button
                                         className="bg-yellow-500 hover:bg-yellow-600  px-4 py-2 rounded-md w-40"
-                                        onClick={() => mudarStatus(evento.id, "em andamento")}
+                                        onClick={() => mudarStatus(evento.id, "Em andamento")}
                                     >
                                         Em andamento
                                     </button>
@@ -52,7 +52,7 @@ const CompMonitorarEventos = () => {
 
                                 <button
                                     className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md w-40"
-                                    onClick={() => mudarStatus(evento.id, "resolvido")}
+                                    onClick={() => mudarStatus(evento.id, "Resolvido")}
                                 >
                                     Resolvido
                                 </button>
