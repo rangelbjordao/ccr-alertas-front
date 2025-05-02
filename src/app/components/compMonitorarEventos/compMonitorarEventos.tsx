@@ -1,4 +1,26 @@
+'use client'
+
+import { atualizarStatusEvento, buscarEventos, Evento } from "@/app/services/api"
+import { useEffect, useState } from "react"
+
 const CompMonitorarEventos = () => {
+    const [eventos, setEventos] = useState<Evento[]>([]);
+
+    useEffect(() => {
+        const carregarEventos = async () => {
+            const dados = await buscarEventos();
+            setEventos(dados.filter(ev => ev.status !== "resolvido"));
+        };
+
+        carregarEventos();
+    }, []);
+
+    async function mudarStatus(id: number, novoStatus: "aberto" | "em andamento" | "resolvido") {
+        await atualizarStatusEvento(id, novoStatus);
+        const atualizados = await buscarEventos();
+        setEventos(atualizados.filter(ev => ev.status !== "resolvido"));
+    }
+
     return (
         <>
             <main>
@@ -8,23 +30,36 @@ const CompMonitorarEventos = () => {
                 <section className="flex flex-col items-center p-5 my-5 bg-neutral-400 text-white rounded-lg shadow-md max-w-11/12 mx-auto w-4xl text-center">
                     <h2 className="text-2xl font-semibold mb-4">Eventos em Aberto</h2>
 
-                    <div className="w-full max-w-3xl bg-white text-black p-4 rounded-md shadow-md mb-4">
-                        <h3 className="text-xl font-bold text-red-700 mb-5">Conflito entre Passageiros</h3>
-                        <p className="m-2"><strong>Data:</strong> 31 de outubro de 2024</p>
-                        <p className="m-2"><strong>Cargo:</strong> Segurança</p>
-                        <p className="m-2"><strong>Descrição:</strong> Dois passageiros iniciaram uma discussão na plataforma.</p>
-                        <p className="m-2"><strong>Local:</strong> Plataforma 2</p>
-                        <p className="m-2"><strong>Status:</strong> Sem confirmação</p>
-                    </div>
+                    {eventos.length === 0 && <p className="text-white">Nenhum evento em aberto.</p>}
 
-                    <div className="w-full max-w-3xl bg-white text-black p-4 rounded-md shadow-md">
-                        <h3 className="text-xl font-bold text-red-700 mb-5">Falha na Escada Rolante</h3>
-                        <p className="m-2"><strong>Data:</strong> 30 de outubro de 2024</p>
-                        <p className="m-2"><strong>Cargo:</strong> Manutenção</p>
-                        <p className="m-2"><strong>Descrição:</strong> Escada rolante parou de funcionar repentinamente.</p>
-                        <p className="m-2"><strong>Local:</strong> Acesso à Plataforma 1</p>
-                        <p className="m-2"><strong>Status:</strong> Em manutenção</p>
-                    </div>
+                    {eventos.map(evento => (
+                        <div key={evento.id} className="w-full max-w-3xl bg-white text-black p-4 rounded-md shadow-md mb-4">
+                            <h3 className="text-xl font-bold text-red-700 mb-2">{evento.titulo}</h3>
+                            <p><strong>Data:</strong> {evento.data}</p>
+                            <p><strong>Cargo:</strong> {evento.cargo}</p>
+                            <p><strong>Descrição:</strong> {evento.descricao}</p>
+                            <p><strong>Status:</strong> {evento.status}</p>
+
+                            <div className="flex flex-wrap justify-center gap-2 mt-3">
+                                {evento.status !== "em andamento" && (
+                                    <button
+                                        className="bg-yellow-500 hover:bg-yellow-600  px-4 py-2 rounded-md w-40"
+                                        onClick={() => mudarStatus(evento.id, "em andamento")}
+                                    >
+                                        Em andamento
+                                    </button>
+                                )}
+
+                                <button
+                                    className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md w-40"
+                                    onClick={() => mudarStatus(evento.id, "resolvido")}
+                                >
+                                    Resolvido
+                                </button>
+                            </div>
+                        </div>
+
+                    ))}
                 </section>
             </main>
         </>
