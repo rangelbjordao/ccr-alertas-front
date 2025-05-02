@@ -1,6 +1,12 @@
+import { Metadata } from "next";
 import { Footer } from "./components/footer/footer";
 import { Header } from "./components/header/header";
 import "./globals.css";
+
+export const metadata: Metadata = {
+    title: "CCR",
+    description: "CCR",
+};
 
 export default function RootLayout({
     children,
@@ -9,7 +15,6 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="pt-br">
-            <title>CCR</title>
             <body className="font-[Arial] text-lg m-0 p-0 leading-relaxed text-black bg-neutral-50 min-h-screen flex flex-col">
                 <Header />
 
