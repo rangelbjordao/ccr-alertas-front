@@ -47,7 +47,7 @@ export function Header() {
         <>
             {/* Botão de Login e Logout */}
             {!loading && (
-                <div className="fixed top-2 right-2 flex flex-col items-end">
+                <div className="absolute top-2 right-2 flex flex-col items-end">
                     <button
                         onClick={logado ? handleLogout : handleLogin}
                         className="flex items-center gap-2 bg-gray-200 px-3 py-1 rounded-md text-gray-700 hover:bg-gray-300 transition hover:cursor-pointer text-sm sm:text-base md:text-lg lg:text-xl"
