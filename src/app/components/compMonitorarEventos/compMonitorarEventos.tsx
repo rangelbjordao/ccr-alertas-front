@@ -1,6 +1,6 @@
 'use client'
 
-import { atualizarStatusEvento, buscarEventos, carregarEventos, Evento } from "@/app/services/api"
+import { atualizarStatusEvento, carregarEventos, Evento } from "@/app/services/api"
 import { useEffect, useState } from "react"
 
 const CompMonitorarEventos = () => {
@@ -9,7 +9,7 @@ const CompMonitorarEventos = () => {
     useEffect(() => {
         const mostrarEventos = async () => {
             try {
-                const eventosNaoResolvidos = await carregarEventos(["Em andamento", "Sem resposta"]);
+                const eventosNaoResolvidos = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
                 setEventos(eventosNaoResolvidos);
             } catch (error) {
                 console.error("Erro ao carregar eventos:", error);
@@ -21,8 +21,9 @@ const CompMonitorarEventos = () => {
 
     async function mudarStatus(id: number, novoStatus: "Sem resposta" | "Em andamento" | "Resolvido") {
         await atualizarStatusEvento(id, novoStatus);
-        const atualizados = await buscarEventos();
-        setEventos(atualizados.filter(ev => ev.status !== "Resolvido"));
+        const eventosFiltrados = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
+        setEventos(eventosFiltrados);
+
     }
 
     return (
@@ -38,21 +39,41 @@ const CompMonitorarEventos = () => {
 
                     {eventos.map(evento => (
                         <div key={evento.id} className="w-full max-w-3xl bg-white text-black p-4 rounded-md shadow-md mb-4">
-                            <h3 className="text-xl font-bold text-red-700 mb-2">{evento.titulo}</h3>
+                            <h3
+                                className={`text-xl font-bold mb-2 ${evento.status === "Sem resposta"
+                                    ? "text-red-700"
+                                    : evento.status === "Em andamento"
+                                        ? "text-yellow-600"
+                                        : evento.status === "Ajuda solicitada"
+                                            ? "text-blue-700"
+                                            : ""
+                                    }`}
+                            >
+                                {evento.titulo}
+                            </h3>
+
                             <p><strong>Data:</strong> {evento.data}</p>
                             <p><strong>Cargo:</strong> {evento.cargo}</p>
                             <p><strong>Descrição:</strong> {evento.descricao}</p>
                             <p><strong>Status:</strong> {evento.status}</p>
 
                             <div className="flex flex-wrap justify-center gap-2 mt-3">
-                                {evento.status !== "Em andamento" && (
+                                {evento.status === "Ajuda solicitada" ? (
                                     <button
-                                        className="bg-yellow-500 hover:bg-yellow-600  px-4 py-2 rounded-md w-40"
+                                        className="bg-blue-400 hover:bg-blue-500 px-4 py-2 rounded-md w-40"
+                                        onClick={() => mudarStatus(evento.id, "Em andamento")}
+                                    >
+                                        Ajudar
+                                    </button>
+                                ) : evento.status !== "Em andamento" && (
+                                    <button
+                                        className="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-md w-40"
                                         onClick={() => mudarStatus(evento.id, "Em andamento")}
                                     >
                                         Em andamento
                                     </button>
                                 )}
+
 
                                 <button
                                     className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md w-40"

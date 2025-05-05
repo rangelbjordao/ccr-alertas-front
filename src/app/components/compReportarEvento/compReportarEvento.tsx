@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Botao from "../botao/botao";
-import { enviarEvento } from "@/app/services/api";
+import { cargos, enviarEvento } from "@/app/services/api";
 
 const CompReportarEventos = () => {
 
@@ -81,9 +81,9 @@ const CompReportarEventos = () => {
                                 className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.cargo ? 'border-2 border-red-500' : ''}`}
                             >
                                 <option value="">-- Selecione um cargo --</option>
-                                <option value="seguranca">Segurança</option>
-                                <option value="limpeza">Limpeza</option>
-                                <option value="manutencao">Manutenção</option>
+                                {cargos.map((cargo, index) => (
+                                    <option key={index} value={cargo}>{cargo}</option>
+                                ))}
                             </select>
                         </div>
 

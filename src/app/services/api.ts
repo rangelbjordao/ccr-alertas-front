@@ -4,8 +4,11 @@ export type Evento = {
     descricao: string;
     data: string;
     cargo: string;
-    status: "Sem resposta" | "Resolvido" | "Em andamento";
+    status: "Sem resposta" | "Resolvido" | "Em andamento" | "Ajuda solicitada";
+    ajudaSolicitada?: boolean;
 };
+
+export const cargos = ["Segurança", "Manutenção", "Limpeza", "Agente"];
 
 let eventosFalsos: Evento[] = [
     {
@@ -14,7 +17,8 @@ let eventosFalsos: Evento[] = [
         data: "30/10/2024",
         cargo: "Manutenção",
         descricao: "Escada rolante parou de funcionar repentinamente.",
-        status: "Sem resposta"
+        status: "Sem resposta",
+        ajudaSolicitada: false
     },
     {
         id: 2,
@@ -22,7 +26,8 @@ let eventosFalsos: Evento[] = [
         data: "31/10/2024",
         cargo: "Segurança",
         descricao: "Dois passageiros iniciaram uma discussão na plataforma.",
-        status: "Em andamento"
+        status: "Em andamento",
+        ajudaSolicitada: false
     },
     {
         id: 3,
@@ -30,9 +35,11 @@ let eventosFalsos: Evento[] = [
         data: "25/10/2024",
         cargo: "Manutenção",
         descricao: "Lâmpada queimada na estação.",
-        status: "Resolvido"
+        status: "Resolvido",
+        ajudaSolicitada: false
     }
-]
+];
+
 
 export async function buscarEventos(): Promise<Evento[]> {
     await new Promise((res) => setTimeout(res, 300));
@@ -53,7 +60,7 @@ export function ordenaEventosPorData(eventos: Evento[]): Evento[] {
     });
 }
 
-export async function carregarEventos(status: ("Resolvido" | "Em andamento" | "Sem resposta")[]): Promise<Evento[]> {
+export async function carregarEventos(status: ("Sem resposta" | "Resolvido" | "Em andamento" | "Ajuda solicitada")[]): Promise<Evento[]> {
     const eventos = await buscarEventos();
     const eventosFiltrados = eventos.filter(evento => status.includes(evento.status));
     return ordenaEventosPorData(eventosFiltrados);
@@ -82,3 +89,14 @@ export async function atualizarStatusEvento(
         evento.status = novoStatus;
     }
 }
+
+export async function solicitarAjudaParaEvento(id: number, novaDescricao: string): Promise<{ sucesso: boolean }> {
+    const evento = eventosFalsos.find(ev => ev.id === id);
+    if (evento) {
+        evento.status = "Ajuda solicitada";
+        evento.descricao = novaDescricao;
+        return { sucesso: true };
+    }
+    return { sucesso: false };
+}
+

@@ -1,6 +1,6 @@
 'use client'
 
-import { buscarEventos, carregarEventos, Evento } from "@/app/services/api";
+import { carregarEventos, Evento } from "@/app/services/api";
 import { useEffect, useState } from "react";
 
 const CompHistorico = () => {
@@ -34,7 +34,7 @@ const CompHistorico = () => {
                     ) : (
                         eventos.map((evento) => (
                             <div key={evento.id} className="w-full max-w-3xl bg-white text-black p-4 rounded-md shadow-md mb-4">
-                                <h3 className="text-xl font-bold text-red-700 mb-5">{evento.titulo}</h3>
+                                <h3 className="text-xl font-bold text-green-800 mb-5">{evento.titulo}</h3>
                                 <p className="m-2"><strong>Data:</strong> {evento.data}</p>
                                 <p className="m-2"><strong>Cargo:</strong> {evento.cargo}</p>
                                 <p className="m-2"><strong>Descrição:</strong> {evento.descricao}</p>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Botao from "../botao/botao";
-import { carregarEventos, enviarEvento, Evento } from "@/app/services/api";
+import { carregarEventos, Evento, solicitarAjudaParaEvento } from "@/app/services/api";
 
 const CompSolicitarAjuda = () => {
     const [eventoSelecionado, setEventoSelecionado] = useState("");
@@ -13,13 +13,9 @@ const CompSolicitarAjuda = () => {
     const [eventos, setEventos] = useState<Evento[]>([]);
 
     useEffect(() => {
-        // Carregar apenas os eventos "Em andamento"
-        const fetchEventos = async () => {
-            const eventosEmAndamento = await carregarEventos(["Em andamento"]);
-            setEventos(eventosEmAndamento);
-        };
-        fetchEventos();
+        carregarEventos(["Em andamento"]).then(setEventos);
     }, []);
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -37,28 +33,20 @@ const CompSolicitarAjuda = () => {
             return;
         }
 
-        setMensagemErro("");
+        const sucesso = await solicitarAjudaParaEvento(Number(eventoSelecionado), descricaoAjuda.trim());
 
-        // Encontrar o evento selecionado
-        const eventoSelecionadoObj = eventos.find(evento => evento.id.toString() === eventoSelecionado);
-
-        if (eventoSelecionadoObj) {
-            // Enviar o evento com a descrição de ajuda do usuário
-            await enviarEvento({
-                titulo: eventoSelecionadoObj.titulo,
-                descricao: descricaoAjuda, // Usar a descrição fornecida pelo usuário
-                data: eventoSelecionadoObj.data,
-                cargo: eventoSelecionadoObj.cargo
-            });
-
+        if (sucesso.sucesso) {
+            setMensagemErro("");
             setMensagemSucesso("Pedido de ajuda enviado com sucesso!");
+            setEventoSelecionado("");
+            setDescricaoAjuda("");
+            carregarEventos(["Em andamento"]).then(setEventos); // recarrega lista
         } else {
-            setMensagemErro("Erro ao enviar o pedido de ajuda.");
+            setMensagemErro("Falha ao solicitar ajuda.");
+            setMensagemSucesso("");
         }
-
-        setEventoSelecionado("");
-        setDescricaoAjuda("");
     };
+
 
     return (
         <main>
@@ -77,12 +65,13 @@ const CompSolicitarAjuda = () => {
                             className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.evento ? 'border-2 border-red-500' : ''}`}
                         >
                             <option value="">-- Selecione um evento --</option>
-                            {eventos.map(evento => (
-                                <option key={evento.id} value={evento.id.toString()}>
-                                    {evento.titulo}
+                            {eventos.map((evento) => (
+                                <option key={evento.id} value={evento.id}>
+                                    {evento.titulo} - {evento.data}
                                 </option>
                             ))}
                         </select>
+
                     </div>
 
                     <div className="flex flex-col mb-4">
