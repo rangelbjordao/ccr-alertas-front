@@ -70,7 +70,7 @@ const CompMonitorarEventos = () => {
                                         className="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-md w-40"
                                         onClick={() => mudarStatus(evento.id, "Em andamento")}
                                     >
-                                        Em andamento
+                                        Resolver
                                     </button>
                                 )}
 
@@ -79,7 +79,7 @@ const CompMonitorarEventos = () => {
                                     className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md w-40"
                                     onClick={() => mudarStatus(evento.id, "Resolvido")}
                                 >
-                                    Resolvido
+                                    Finalizar
                                 </button>
                             </div>
                         </div>
