@@ -6,11 +6,12 @@ import { cargos, enviarEvento } from "@/app/services/api";
 
 const CompReportarEventos = () => {
 
-    const [erroCampos, setErroCampos] = useState({ titulo: false, descricao: false, cargo: false });
+    const [erroCampos, setErroCampos] = useState({ titulo: false, descricao: false, cargo: false, local: false });
     const [mensagemErro, setMensagemErro] = useState("");
     const [mensagemSucesso, setMensagemSucesso] = useState("");
     const [cargoSelecionado, setCargoSelecionado] = useState("");
     const [titulo, setTitulo] = useState("");
+    const [local, setLocal] = useState("");
     const [descricao, setDescricao] = useState("");
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -19,6 +20,7 @@ const CompReportarEventos = () => {
         const novosErros = {
             titulo: titulo.trim() === "",
             cargo: cargoSelecionado === "",
+            local: local.trim() === "",
             descricao: descricao.trim() === ""
         };
 
@@ -35,6 +37,7 @@ const CompReportarEventos = () => {
                 titulo,
                 descricao,
                 cargo: cargoSelecionado,
+                local,
                 data: new Date().toLocaleDateString("pt-BR")
             });
 
@@ -43,6 +46,7 @@ const CompReportarEventos = () => {
                 setMensagemSucesso("Evento reportado com sucesso!");
                 setTitulo("");
                 setCargoSelecionado("");
+                setLocal("");
                 setDescricao("");
             }
         } catch (error) {
@@ -68,6 +72,18 @@ const CompReportarEventos = () => {
                                 value={titulo}
                                 onChange={(e) => setTitulo(e.target.value)}
                                 className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.titulo ? 'border-2 border-red-500' : ''}`}
+                            />
+                        </div>
+
+                        <div className="flex flex-col mb-4">
+                            <label htmlFor="local-evento" className="mb-2">Local do Evento:</label>
+                            <input
+                                type="text"
+                                id="local-evento"
+                                name="local-evento"
+                                value={local}
+                                onChange={(e) => setLocal(e.target.value)}
+                                className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.local ? 'border-2 border-red-500' : ''}`}
                             />
                         </div>
 

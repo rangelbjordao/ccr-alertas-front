@@ -2,6 +2,7 @@ export type Evento = {
     id: number;
     titulo: string;
     descricao: string;
+    local: string;
     data: string;
     cargo: string;
     status: "Sem resposta" | "Resolvido" | "Em andamento" | "Ajuda solicitada";
@@ -16,6 +17,7 @@ let eventosFalsos: Evento[] = [
         titulo: "Falha na Escada Rolante",
         data: "30/10/2024",
         cargo: "Manutenção",
+        local: "Plataforma 2",
         descricao: "Escada rolante parou de funcionar repentinamente.",
         status: "Sem resposta",
         ajudaSolicitada: false
@@ -25,6 +27,7 @@ let eventosFalsos: Evento[] = [
         titulo: "Conflito entre Passageiros",
         data: "31/10/2024",
         cargo: "Segurança",
+        local: "Plataforma 3",
         descricao: "Dois passageiros iniciaram uma discussão na plataforma.",
         status: "Em andamento",
         ajudaSolicitada: false
@@ -34,6 +37,7 @@ let eventosFalsos: Evento[] = [
         titulo: "Problema na Iluminação",
         data: "25/10/2024",
         cargo: "Manutenção",
+        local: "Plataforma 1",
         descricao: "Lâmpada queimada na estação.",
         status: "Resolvido",
         ajudaSolicitada: false

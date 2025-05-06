@@ -52,10 +52,11 @@ const CompMonitorarEventos = () => {
                                 {evento.titulo}
                             </h3>
 
-                            <p><strong>Data:</strong> {evento.data}</p>
-                            <p><strong>Cargo:</strong> {evento.cargo}</p>
-                            <p><strong>Descrição:</strong> {evento.descricao}</p>
-                            <p><strong>Status:</strong> {evento.status}</p>
+                            <p className="m-2"><strong>Cargo:</strong> {evento.cargo}</p>
+                            <p className="m-2"><strong>Local:</strong> {evento.local}</p>
+                            <p className="m-2"><strong>Descrição:</strong> {evento.descricao}</p>
+                            <p className="m-2"><strong>Data:</strong> {evento.data}</p>
+                            <p className="m-2"><strong>Status:</strong> {evento.status}</p>
 
                             <div className="flex flex-wrap justify-center gap-2 mt-3">
                                 {evento.status === "Ajuda solicitada" ? (

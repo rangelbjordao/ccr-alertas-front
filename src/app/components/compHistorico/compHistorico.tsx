@@ -34,10 +34,11 @@ const CompHistorico = () => {
                     ) : (
                         eventos.map((evento) => (
                             <div key={evento.id} className="w-full max-w-3xl bg-white text-black p-4 rounded-md shadow-md mb-4">
-                                <h3 className="text-xl font-bold text-green-800 mb-5">{evento.titulo}</h3>
-                                <p className="m-2"><strong>Data:</strong> {evento.data}</p>
+                                <h3 className="text-xl font-bold mb-2 text-green-800 ">{evento.titulo}</h3>
                                 <p className="m-2"><strong>Cargo:</strong> {evento.cargo}</p>
+                                <p className="m-2"><strong>Local:</strong> {evento.local}</p>
                                 <p className="m-2"><strong>Descrição:</strong> {evento.descricao}</p>
+                                <p className="m-2"><strong>Data:</strong> {evento.data}</p>
                                 <p className="m-2"><strong>Status:</strong> {evento.status}</p>
                             </div>
                         ))
