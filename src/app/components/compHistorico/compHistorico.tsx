@@ -1,10 +1,11 @@
 'use client'
 
-import { carregarEventos, Evento } from "@/app/services/api";
+import { carregarEventos} from "@/app/services/api";
+import { propEventos } from "@/app/types/props";
 import { useEffect, useState } from "react";
 
 const CompHistorico = () => {
-    const [eventos, setEventos] = useState<Evento[]>([])
+    const [eventos, setEventos] = useState<propEventos[]>([])
 
     useEffect(() => {
         const mostrarEventos = async () => {

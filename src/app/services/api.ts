@@ -1,17 +1,9 @@
-export type Evento = {
-    id: number;
-    titulo: string;
-    descricao: string;
-    local: string;
-    data: string;
-    cargo: string;
-    status: "Sem resposta" | "Resolvido" | "Em andamento" | "Ajuda solicitada";
-    ajudaSolicitada?: boolean;
-};
+import { propEventos } from "../types/props";
+
 
 export const cargos = ["Segurança", "Manutenção", "Limpeza", "Agente"];
 
-let eventosFalsos: Evento[] = [
+let eventosFalsos: propEventos[] = [
     {
         id: 1,
         titulo: "Falha na Escada Rolante",
@@ -45,7 +37,7 @@ let eventosFalsos: Evento[] = [
 ];
 
 
-export async function buscarEventos(): Promise<Evento[]> {
+export async function buscarEventos(): Promise<propEventos[]> {
     await new Promise((res) => setTimeout(res, 300));
     return eventosFalsos;
 }
@@ -55,7 +47,7 @@ function dataFormatada(data: string): Date {
     return new Date(ano, mes - 1, dia);
 }
 
-export function ordenaEventosPorData(eventos: Evento[]): Evento[] {
+export function ordenaEventosPorData(eventos: propEventos[]): propEventos[] {
     const listaEventos = [...eventos];
     return listaEventos.sort((a, b) => {
         const dataA = dataFormatada(a.data);
@@ -64,13 +56,13 @@ export function ordenaEventosPorData(eventos: Evento[]): Evento[] {
     });
 }
 
-export async function carregarEventos(status: ("Sem resposta" | "Resolvido" | "Em andamento" | "Ajuda solicitada")[]): Promise<Evento[]> {
+export async function carregarEventos(status: ("Sem resposta" | "Resolvido" | "Em andamento" | "Ajuda solicitada")[]): Promise<propEventos[]> {
     const eventos = await buscarEventos();
     const eventosFiltrados = eventos.filter(evento => status.includes(evento.status));
     return ordenaEventosPorData(eventosFiltrados);
 }
 
-export async function enviarEvento(evento: Omit<Evento, "id" | "status">): Promise<{ sucesso: boolean }> {
+export async function enviarEvento(evento: Omit<propEventos, "id" | "status">): Promise<{ sucesso: boolean }> {
     await new Promise((res) => setTimeout(res, 300));
 
     console.log("Evento recebido (mock):", evento);
@@ -86,7 +78,7 @@ export async function enviarEvento(evento: Omit<Evento, "id" | "status">): Promi
 
 export async function atualizarStatusEvento(
     id: number,
-    novoStatus: Evento["status"]
+    novoStatus: propEventos["status"]
 ): Promise<void> {
     const evento = eventosFalsos.find(ev => ev.id === id);
     if (evento) {

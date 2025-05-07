@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Botao from "../botao/botao";
-import { carregarEventos, Evento, solicitarAjudaParaEvento } from "@/app/services/api";
+import { carregarEventos, solicitarAjudaParaEvento } from "@/app/services/api";
+import { propEventos } from "@/app/types/props";
 
 const CompSolicitarAjuda = () => {
     const [eventoSelecionado, setEventoSelecionado] = useState("");
@@ -10,7 +11,7 @@ const CompSolicitarAjuda = () => {
     const [erroCampos, setErroCampos] = useState({ evento: false, descricao: false });
     const [mensagemErro, setMensagemErro] = useState("");
     const [mensagemSucesso, setMensagemSucesso] = useState("");
-    const [eventos, setEventos] = useState<Evento[]>([]);
+    const [eventos, setEventos] = useState<propEventos[]>([]);
 
     useEffect(() => {
         carregarEventos(["Em andamento"]).then(setEventos);
