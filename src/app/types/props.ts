@@ -8,3 +8,8 @@ export interface propEventos {
     status: "Sem resposta" | "Resolvido" | "Em andamento" | "Ajuda solicitada";
     ajudaSolicitada?: boolean;
 }
+
+export interface propLogins {
+    login: string
+    senha: string
+}

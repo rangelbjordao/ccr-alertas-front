@@ -1,7 +1,22 @@
-import { propEventos } from "../types/props";
+import { propEventos, propLogins } from "../types/props";
 
 
 export const cargos = ["Segurança", "Manutenção", "Limpeza", "Agente"];
+
+export let loginsFalsos: propLogins[] = [
+    {
+        login: "admin",
+        senha: "admin"
+    },
+    {
+        login: "123",
+        senha: "123"
+    },
+    {
+        login: "ro123456",
+        senha: "654321"
+    }
+]
 
 let eventosFalsos: propEventos[] = [
     {

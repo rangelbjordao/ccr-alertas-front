@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Botao from "../botao/botao";
+import { loginsFalsos } from "@/app/services/api";
 
 const CompLogin = () => {
     const [ro, setRo] = useState("");
@@ -25,7 +26,9 @@ const CompLogin = () => {
         setCarregando(true);
 
         setTimeout(() => {
-            if (ro === "admin" && senha === "admin") {
+            if (loginsFalsos.find(
+                (loginObj) => loginObj.login === ro && loginObj.senha === senha
+            )) {
                 localStorage.setItem("authToken", "logado");
                 window.dispatchEvent(new Event("storage"));
                 router.push("/ccr-alertas");
