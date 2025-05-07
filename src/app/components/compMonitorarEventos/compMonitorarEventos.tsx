@@ -67,25 +67,24 @@ const CompMonitorarEventos = () => {
                                     >
                                         Ajudar
                                     </button>
-                                ) : evento.status !== "Em andamento" && (
+                                ) : evento.status === "Em andamento" ? (
+                                    <button
+                                        className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md w-40"
+                                        onClick={() => mudarStatus(evento.id, "Resolvido")}
+                                    >
+                                        Finalizar
+                                    </button>
+                                ) : (
                                     <button
                                         className="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-md w-40"
                                         onClick={() => mudarStatus(evento.id, "Em andamento")}
                                     >
                                         Resolver
                                     </button>
-                                )}
-
-
-                                <button
-                                    className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md w-40"
-                                    onClick={() => mudarStatus(evento.id, "Resolvido")}
-                                >
-                                    Finalizar
-                                </button>
+                                )
+                                }
                             </div>
                         </div>
-
                     ))}
                 </section>
             </main>
