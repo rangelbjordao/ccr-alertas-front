@@ -26,10 +26,13 @@ const CompLogin = () => {
         setCarregando(true);
 
         setTimeout(() => {
-            if (loginsFalsos.find(
+            const usuario = loginsFalsos.find(
                 (loginObj) => loginObj.login === ro && loginObj.senha === senha
-            )) {
+            );
+
+            if (usuario) {
                 localStorage.setItem("authToken", "logado");
+                localStorage.setItem("cargoUsuario", usuario.cargo);
                 window.dispatchEvent(new Event("storage"));
                 router.push("/ccr-alertas");
             } else {

@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import Botao from "../botao/botao";
-import { cargos, enviarEvento } from "@/app/services/api";
+import { enviarEvento, tiposDeEventos } from "@/app/services/api";
 
 const CompReportarEventos = () => {
 
     const [erroCampos, setErroCampos] = useState({ titulo: false, descricao: false, cargo: false, local: false });
     const [mensagemErro, setMensagemErro] = useState("");
     const [mensagemSucesso, setMensagemSucesso] = useState("");
-    const [cargoSelecionado, setCargoSelecionado] = useState("");
+    const [cargo, setCargo] = useState("");
     const [titulo, setTitulo] = useState("");
     const [local, setLocal] = useState("");
     const [descricao, setDescricao] = useState("");
@@ -19,7 +19,7 @@ const CompReportarEventos = () => {
 
         const novosErros = {
             titulo: titulo.trim() === "",
-            cargo: cargoSelecionado === "",
+            cargo: cargo === "",
             local: local.trim() === "",
             descricao: descricao.trim() === ""
         };
@@ -36,7 +36,7 @@ const CompReportarEventos = () => {
             const resultado = await enviarEvento({
                 titulo,
                 descricao,
-                cargo: cargoSelecionado,
+                cargo: cargo,
                 local,
                 data: new Date().toLocaleDateString("pt-BR")
             });
@@ -45,7 +45,7 @@ const CompReportarEventos = () => {
                 setMensagemErro("");
                 setMensagemSucesso("Evento reportado com sucesso!");
                 setTitulo("");
-                setCargoSelecionado("");
+                setCargo("");
                 setLocal("");
                 setDescricao("");
             }
@@ -64,15 +64,25 @@ const CompReportarEventos = () => {
                 <section className="flex flex-col items-center p-5 my-5 bg-neutral-400 text-white rounded-lg shadow-md max-w-11/12 mx-auto w-4xl text-center">
                     <form className="w-full max-w-md" onSubmit={handleSubmit}>
                         <div className="flex flex-col mb-4">
-                            <label htmlFor="titulo-evento" className="mb-2">Título do Evento:</label>
-                            <input
-                                type="text"
+                            <label htmlFor="titulo-evento" className="mb-2">Selecionar Evento:</label>
+                            <select
                                 id="titulo-evento"
                                 name="titulo-evento"
                                 value={titulo}
-                                onChange={(e) => setTitulo(e.target.value)}
+                                onChange={(e) => {
+                                    const eventoSelecionado = tiposDeEventos.find(evento => evento.titulo === e.target.value);
+                                    setTitulo(e.target.value);
+                                    setCargo(eventoSelecionado?.cargoResponsavel || "");
+                                }}
                                 className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.titulo ? 'border-2 border-red-500' : ''}`}
-                            />
+                            >
+                                <option value="">Selecione um evento</option>
+                                {tiposDeEventos.map((evento, index) => (
+                                    <option key={index} value={evento.titulo}>
+                                        {evento.titulo}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         <div className="flex flex-col mb-4">
@@ -87,7 +97,7 @@ const CompReportarEventos = () => {
                             />
                         </div>
 
-                        <div className="flex flex-col mb-4">
+                        {/*                         <div className="flex flex-col mb-4">
                             <label htmlFor="selecionar-cargo" className="mb-2">Selecionar Cargo:</label>
                             <select
                                 id="selecionar-cargo"
@@ -101,7 +111,7 @@ const CompReportarEventos = () => {
                                     <option key={index} value={cargo}>{cargo}</option>
                                 ))}
                             </select>
-                        </div>
+                        </div> */}
 
                         <div className="flex flex-col mb-4">
                             <label htmlFor="descricao-evento" className="mb-2">Descrição do Evento:</label>

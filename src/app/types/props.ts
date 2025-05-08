@@ -12,4 +12,5 @@ export interface propEventos {
 export interface propLogins {
     login: string
     senha: string
+    cargo: string
 }

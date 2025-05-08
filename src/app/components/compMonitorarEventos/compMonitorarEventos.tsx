@@ -10,8 +10,19 @@ const CompMonitorarEventos = () => {
     useEffect(() => {
         const mostrarEventos = async () => {
             try {
-                const eventosNaoResolvidos = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
-                setEventos(eventosNaoResolvidos);
+                const cargoUsuario = localStorage.getItem("cargoUsuario");
+                if (!cargoUsuario) return;
+
+                if (cargoUsuario === "Admin") {
+                    // Se for Admin, carrega todos os eventos
+                    const eventosNaoResolvidos = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
+                    setEventos(eventosNaoResolvidos);
+                } else {
+                    // Se não for Admin, filtra os eventos por cargo
+                    const eventosNaoResolvidos = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
+                    const eventosFiltrados = eventosNaoResolvidos.filter(evento => evento.cargo === cargoUsuario);
+                    setEventos(eventosFiltrados);
+                }
             } catch (error) {
                 console.error("Erro ao carregar eventos:", error);
             }
@@ -22,9 +33,15 @@ const CompMonitorarEventos = () => {
 
     async function mudarStatus(id: number, novoStatus: "Sem resposta" | "Em andamento" | "Resolvido") {
         await atualizarStatusEvento(id, novoStatus);
-        const eventosFiltrados = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
-        setEventos(eventosFiltrados);
+        const cargoUsuario = localStorage.getItem("cargoUsuario");
 
+        if (cargoUsuario === "Admin") {
+            const eventosFiltrados = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
+            setEventos(eventosFiltrados);
+        } else {
+            const eventosFiltrados = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
+            setEventos(eventosFiltrados.filter(evento => evento.cargo === cargoUsuario));
+        }
     }
 
     return (

@@ -1,20 +1,41 @@
 import { propEventos, propLogins } from "../types/props";
 
+export const tiposDeEventos = [
+    { titulo: "Falha na Escada Rolante", cargoResponsavel: "Manutenção" },
+    { titulo: "Conflito entre Passageiros", cargoResponsavel: "Segurança" },
+    { titulo: "Problema na Iluminação", cargoResponsavel: "Manutenção" },
+    { titulo: "Alagamento", cargoResponsavel: "Limpeza" },
+    { titulo: "Atraso na Linha", cargoResponsavel: "Agente" }
+];
 
 export const cargos = ["Segurança", "Manutenção", "Limpeza", "Agente"];
 
 export let loginsFalsos: propLogins[] = [
     {
         login: "admin",
-        senha: "admin"
+        senha: "admin",
+        cargo: "Admin"
     },
     {
-        login: "123",
-        senha: "123"
+        login: "agente",
+        senha: "agente",
+        cargo: "Agente"
     },
     {
-        login: "ro123456",
-        senha: "654321"
+        login: "manutencao",
+        senha: "manutencao",
+        cargo: "Manutenção"
+    },
+    {
+        login: "seguranca",
+        senha: "seguranca",
+        cargo: "Segurança"
+    },
+    {
+
+        login: "limpeza",
+        senha: "limpeza",
+        cargo: "Limpeza"
     }
 ]
 
@@ -22,7 +43,7 @@ let eventosFalsos: propEventos[] = [
     {
         id: 1,
         titulo: "Falha na Escada Rolante",
-        data: "30/10/2024",
+        data: "02/11/2024",
         cargo: "Manutenção",
         local: "Plataforma 2",
         descricao: "Escada rolante parou de funcionar repentinamente.",
@@ -42,11 +63,41 @@ let eventosFalsos: propEventos[] = [
     {
         id: 3,
         titulo: "Problema na Iluminação",
-        data: "25/10/2024",
+        data: "02/11/2024",
         cargo: "Manutenção",
         local: "Plataforma 1",
         descricao: "Lâmpada queimada na estação.",
         status: "Resolvido",
+        ajudaSolicitada: false
+    },
+    {
+        id: 4,
+        titulo: "Lixeira Transbordando",
+        data: "01/11/2024",
+        cargo: "Limpeza",
+        local: "Entrada Principal",
+        descricao: "Lixeira cheia e mau cheiro no local.",
+        status: "Sem resposta",
+        ajudaSolicitada: false
+    },
+    {
+        id: 5,
+        titulo: "Passageiro com Dificuldade de Mobilidade",
+        data: "01/11/2024",
+        cargo: "Agente",
+        local: "Bilheteria",
+        descricao: "Passageiro solicitou auxílio para embarcar.",
+        status: "Sem resposta",
+        ajudaSolicitada: false
+    },
+    {
+        id: 6,
+        titulo: "Aglomeração na Plataforma",
+        data: "01/11/2024",
+        cargo: "Segurança",
+        local: "Plataforma 4",
+        descricao: "Grande número de pessoas aguardando embarque.",
+        status: "Sem resposta",
         ajudaSolicitada: false
     }
 ];
