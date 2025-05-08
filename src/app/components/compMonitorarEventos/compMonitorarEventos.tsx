@@ -14,11 +14,11 @@ const CompMonitorarEventos = () => {
                 if (!cargoUsuario) return;
 
                 if (cargoUsuario === "Admin") {
-                    // Se for Admin, carrega todos os eventos
+                    // Se for Admin, mostra todos os eventos
                     const eventosNaoResolvidos = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
                     setEventos(eventosNaoResolvidos);
                 } else {
-                    // Se não for Admin, filtra os eventos por cargo
+                    // Se n for Admin, mostra apenas os eventos do msm cargo
                     const eventosNaoResolvidos = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
                     const eventosFiltrados = eventosNaoResolvidos.filter(evento => evento.cargo === cargoUsuario);
                     setEventos(eventosFiltrados);
