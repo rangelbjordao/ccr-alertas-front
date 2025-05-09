@@ -10,7 +10,7 @@ export const tiposDeEventos = [
 
 export const cargos = ["Segurança", "Manutenção", "Limpeza", "Agente"];
 
-export let loginsFalsos: propLogins[] = [
+export const loginsFalsos: propLogins[] = [
     {
         login: "admin",
         senha: "admin",
@@ -39,7 +39,7 @@ export let loginsFalsos: propLogins[] = [
     }
 ]
 
-let eventosFalsos: propEventos[] = [
+const eventosFalsos: propEventos[] = [
     {
         id: 1,
         titulo: "Falha na Escada Rolante",
