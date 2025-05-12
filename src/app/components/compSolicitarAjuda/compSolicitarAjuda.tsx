@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Botao from "../botao/botao";
 import { carregarEventos, solicitarAjudaParaEvento } from "@/app/services/api";
 import { propEventos } from "@/app/types/props";
+import { useRouter } from "next/navigation";
 
 const CompSolicitarAjuda = () => {
     const [eventoSelecionado, setEventoSelecionado] = useState("");
@@ -12,6 +13,15 @@ const CompSolicitarAjuda = () => {
     const [mensagemErro, setMensagemErro] = useState("");
     const [mensagemSucesso, setMensagemSucesso] = useState("");
     const [eventos, setEventos] = useState<propEventos[]>([]);
+    const router = useRouter();
+
+    useEffect(() => {
+        const token = localStorage.getItem("authToken");
+
+        if (!token || token.trim() === "") {
+            router.push("/login");
+        }
+    }, []);
 
     useEffect(() => {
         carregarEventos(["Em andamento"]).then(setEventos);

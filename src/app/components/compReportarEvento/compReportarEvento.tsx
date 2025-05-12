@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Botao from "../botao/botao";
 import { enviarEvento, tiposDeEventos } from "@/app/services/api";
+import { useRouter } from "next/navigation";
 
 const CompReportarEventos = () => {
 
@@ -13,6 +14,15 @@ const CompReportarEventos = () => {
     const [titulo, setTitulo] = useState("");
     const [local, setLocal] = useState("");
     const [descricao, setDescricao] = useState("");
+    const router = useRouter();
+
+    useEffect(() => {
+        const token = localStorage.getItem("authToken");
+
+        if (!token || token.trim() === "") {
+            router.push("/login");
+        }
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

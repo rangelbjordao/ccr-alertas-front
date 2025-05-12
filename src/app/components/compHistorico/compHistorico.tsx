@@ -1,11 +1,21 @@
 'use client'
 
-import { carregarEventos} from "@/app/services/api";
+import { carregarEventos } from "@/app/services/api";
 import { propEventos } from "@/app/types/props";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const CompHistorico = () => {
     const [eventos, setEventos] = useState<propEventos[]>([])
+    const router = useRouter();
+
+    useEffect(() => {
+        const token = localStorage.getItem("authToken");
+
+        if (!token || token.trim() === "") {
+            router.push("/login");
+        }
+    }, []);
 
     useEffect(() => {
         const mostrarEventos = async () => {

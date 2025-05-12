@@ -1,4 +1,4 @@
-import CompMonitorarEventos from "../components/compMonitorarEventos/compMonitorarEventos";
+import CompMonitorarEventos from "../../components/compMonitorarEventos/compMonitorarEventos";
 
 const MonitorarEventos = () => {
     return (

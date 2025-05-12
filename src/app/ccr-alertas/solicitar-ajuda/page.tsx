@@ -1,4 +1,4 @@
-import CompSolicitarAjuda from "../components/compSolicitarAjuda/compSolicitarAjuda";
+import CompSolicitarAjuda from "@/app/components/compSolicitarAjuda/compSolicitarAjuda";
 
 const SolicitarAjuda = () => {
     return (
