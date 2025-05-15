@@ -1,4 +1,4 @@
-import { propLogins } from "../types/props";
+import { propLogins, TipoDeEventoFixo } from "../types/props";
 
 export const API_BASE = 'http://localhost:8080';
 
@@ -7,7 +7,7 @@ const API_KEY = "123456";
 export async function fetchComApiKey(url: string, options: RequestInit = {}) {
     const headers = {
         ...(options.headers || {}),
-        "X-API-Key": API_KEY,
+        "X-API-key": API_KEY,
     };
 
     const resposta = await fetch(url, {
@@ -46,3 +46,13 @@ export const loginsFalsos: propLogins[] = [
         cargo: "Limpeza"
     }
 ]
+
+
+export const tiposDeEventosFixos: TipoDeEventoFixo[] = [
+    { titulo: "CONFLITO_ENTRE_PASSAGEIROS", cargoResponsavel: "Segurança" },
+    { titulo: "FUSIVEL_QUEBRADO", cargoResponsavel: "Técnico Manutenção" },
+    { titulo: "ESCADA_ROLANTE_QUEBRADA", cargoResponsavel: "Técnico Manutenção" },
+    { titulo: "PORTA_DE_EMERGENCIA_QUEBRADA", cargoResponsavel: "Técnico Manutenção" },
+    { titulo: "VIDRO_QUEBRADO", cargoResponsavel: "Limpeza" },
+    { titulo: "LIXEIRA_VAZANDO", cargoResponsavel: "Limpeza" },
+];

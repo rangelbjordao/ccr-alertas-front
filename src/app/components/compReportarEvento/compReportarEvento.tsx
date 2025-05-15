@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import Botao from "../botao/botao";
 import { useRouter } from "next/navigation";
-import { TipoDeEvento } from "@/app/types/props";
-import { API_BASE, fetchComApiKey } from "@/app/services/api";
+import { TipoDeEventoFixo } from "@/app/types/props";
+import { API_BASE, fetchComApiKey, tiposDeEventosFixos } from "@/app/services/api";
 
 const CompReportarEventos = () => {
-    const [tiposDeEventos, setTiposDeEventos] = useState<TipoDeEvento[]>([]);
+    const [tiposDeEventos, setTiposDeEventos] = useState<TipoDeEventoFixo[]>([]);
     const [erroCampos, setErroCampos] = useState({ titulo: false, descricao: false, local: false });
     const [mensagemErro, setMensagemErro] = useState("");
     const [mensagemSucesso, setMensagemSucesso] = useState("");
@@ -25,22 +25,8 @@ const CompReportarEventos = () => {
     }, []);
 
     useEffect(() => {
-        const fetchTiposDeEventos = async () => {
-            try {
-                const resposta = await fetchComApiKey(`${API_BASE}/eventos/tipos-de-eventos`);
-                if (!resposta.ok) {
-                    throw new Error("Erro ao carregar tipos de eventos");
-                }
-                const eventos = await resposta.json();
-                setTiposDeEventos(eventos);
-            } catch (erro) {
-                console.error("Erro ao buscar tipos de eventos:", erro);
-            }
-        };
-
-        fetchTiposDeEventos();
+        setTiposDeEventos(tiposDeEventosFixos);
     }, []);
-
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -65,6 +51,7 @@ const CompReportarEventos = () => {
                 local_event: local,
                 descricao: descricao
             };
+
             const resposta = await fetchComApiKey(`${API_BASE}/reportar-evento`, {
                 method: "POST",
                 headers: {
@@ -91,6 +78,7 @@ const CompReportarEventos = () => {
             setMensagemSucesso("");
         }
     };
+
 
 
     return (
