@@ -1,6 +1,6 @@
 'use client'
 
-import { carregarEventos } from "@/app/services/api";
+// import { carregarEventos } from "@/app/services/api";
 import { propEventos } from "@/app/types/props";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,18 +17,18 @@ const CompHistorico = () => {
         }
     }, []);
 
-    useEffect(() => {
-        const mostrarEventos = async () => {
-            try {
-                const eventosResolvidos = await carregarEventos(["Resolvido"]);
-                setEventos(eventosResolvidos);
-            } catch (error) {
-                console.error("Erro ao carregar eventos:", error);
-            }
-        };
+    // useEffect(() => {
+    //     const mostrarEventos = async () => {
+    //         try {
+    //             const eventosResolvidos = await carregarEventos(["Resolvido"]);
+    //             setEventos(eventosResolvidos);
+    //         } catch (error) {
+    //             console.error("Erro ao carregar eventos:", error);
+    //         }
+    //     };
 
-        mostrarEventos();
-    }, []);
+    //     mostrarEventos();
+    // }, []);
 
 
     return (

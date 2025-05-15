@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Botao from "../botao/botao";
 import { useRouter } from "next/navigation";
 import { TipoDeEvento } from "@/app/types/props";
-import fetchComApiKey, { API_BASE } from "@/app/services/api";
+import { API_BASE, fetchComApiKey } from "@/app/services/api";
 
 const CompReportarEventos = () => {
     const [tiposDeEventos, setTiposDeEventos] = useState<TipoDeEvento[]>([]);
@@ -42,7 +42,6 @@ const CompReportarEventos = () => {
     }, []);
 
 
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -61,18 +60,18 @@ const CompReportarEventos = () => {
         }
 
         try {
-            const resposta = await fetchComApiKey(`${API_BASE}/eventos`, {
+            const dados = {
+                typeEvent: titulo,
+                local_event: local,
+                descricao: descricao
+            };
+            const resposta = await fetchComApiKey(`${API_BASE}/reportar-evento`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    typeEvent: titulo,
-                    local_event: local,
-                    descricao: descricao
-                }),
+                body: JSON.stringify(dados),
             });
-
 
             if (resposta.ok) {
                 setMensagemErro("");
@@ -86,12 +85,13 @@ const CompReportarEventos = () => {
                 setMensagemErro("Erro ao enviar o evento.");
                 setMensagemSucesso("");
             }
-        } catch (error) {
-            console.error("Erro na requisição:", error);
+        } catch (error: any) {
+            console.error("Erro na requisição:", error?.message || error);
             setMensagemErro("Erro ao conectar com o servidor.");
             setMensagemSucesso("");
         }
     };
+
 
     return (
         <main>

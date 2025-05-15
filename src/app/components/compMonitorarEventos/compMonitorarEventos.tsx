@@ -1,6 +1,6 @@
 'use client'
 
-import API_BASE from "@/app/services/api";
+import { API_BASE } from "@/app/services/api";
 import { propEventos } from "@/app/types/props";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"

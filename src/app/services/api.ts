@@ -4,16 +4,18 @@ export const API_BASE = 'http://localhost:8080';
 
 const API_KEY = "123456";
 
-export default async function fetchComApiKey(url: string, options: RequestInit = {}) {
+export async function fetchComApiKey(url: string, options: RequestInit = {}) {
     const headers = {
-        "X-API-Key": API_KEY,
         ...(options.headers || {}),
+        "X-API-Key": API_KEY,
     };
 
-    return fetch(url, {
+    const resposta = await fetch(url, {
         ...options,
         headers,
     });
+
+    return resposta;
 }
 
 export const loginsFalsos: propLogins[] = [

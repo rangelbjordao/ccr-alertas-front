@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Botao from "../botao/botao";
-import { carregarEventos, solicitarAjudaParaEvento } from "@/app/services/api";
+// import { carregarEventos, solicitarAjudaParaEvento } from "@/app/services/api";
 import { propEventos } from "@/app/types/props";
 import { useRouter } from "next/navigation";
 
@@ -23,9 +23,9 @@ const CompSolicitarAjuda = () => {
         }
     }, []);
 
-    useEffect(() => {
-        carregarEventos(["Em andamento"]).then(setEventos);
-    }, []);
+    // useEffect(() => {
+    //     carregarEventos(["Em andamento"]).then(setEventos);
+    // }, []);
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -44,18 +44,18 @@ const CompSolicitarAjuda = () => {
             return;
         }
 
-        const sucesso = await solicitarAjudaParaEvento(Number(eventoSelecionado), descricaoAjuda.trim());
+        //     const sucesso = await solicitarAjudaParaEvento(Number(eventoSelecionado), descricaoAjuda.trim());
 
-        if (sucesso.sucesso) {
-            setMensagemErro("");
-            setMensagemSucesso("Pedido de ajuda enviado com sucesso!");
-            setEventoSelecionado("");
-            setDescricaoAjuda("");
-            carregarEventos(["Em andamento"]).then(setEventos); // recarrega lista
-        } else {
-            setMensagemErro("Falha ao solicitar ajuda.");
-            setMensagemSucesso("");
-        }
+        //     if (sucesso.sucesso) {
+        //         setMensagemErro("");
+        //         setMensagemSucesso("Pedido de ajuda enviado com sucesso!");
+        //         setEventoSelecionado("");
+        //         setDescricaoAjuda("");
+        //         carregarEventos(["Em andamento"]).then(setEventos); // recarrega lista
+        //     } else {
+        //         setMensagemErro("Falha ao solicitar ajuda.");
+        //         setMensagemSucesso("");
+        //     }
     };
 
 
