@@ -14,3 +14,8 @@ export interface propLogins {
     senha: string
     cargo: string
 }
+
+export interface TipoDeEvento {
+    titulo: string;
+    cargoResponsavel: string;
+}

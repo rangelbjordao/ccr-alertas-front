@@ -1,6 +1,6 @@
 'use client'
 
-import { atualizarStatusEvento, carregarEventos } from "@/app/services/api"
+import API_BASE from "@/app/services/api";
 import { propEventos } from "@/app/types/props";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
@@ -23,16 +23,20 @@ const CompMonitorarEventos = () => {
                 const cargoUsuario = localStorage.getItem("cargoUsuario");
                 if (!cargoUsuario) return;
 
-                if (cargoUsuario === "Admin") {
-                    // Se for Admin, mostra todos os eventos
-                    const eventosNaoResolvidos = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
-                    setEventos(eventosNaoResolvidos);
-                } else {
-                    // Se n for Admin, mostra apenas os eventos do msm cargo
-                    const eventosNaoResolvidos = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
-                    const eventosFiltrados = eventosNaoResolvidos.filter(evento => evento.cargo === cargoUsuario);
-                    setEventos(eventosFiltrados);
+                const status = ["Em andamento", "Sem resposta", "Ajuda solicitada"];
+                let url = `${API_BASE}/eventos?status=${status.join(',')}`;
+
+                // Se n for Admin, mostra apenas os eventos do msm cargo
+                if (cargoUsuario !== "Admin") {
+                    url += `&cargo=${cargoUsuario}`;
                 }
+
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error("Erro ao carregar eventos");
+                }
+                const eventosCarregados: propEventos[] = await response.json();
+                setEventos(eventosCarregados);
             } catch (error) {
                 console.error("Erro ao carregar eventos:", error);
             }
@@ -41,18 +45,34 @@ const CompMonitorarEventos = () => {
         mostrarEventos();
     }, []);
 
-    async function mudarStatus(id: number, novoStatus: "Sem resposta" | "Em andamento" | "Resolvido") {
-        await atualizarStatusEvento(id, novoStatus);
-        const cargoUsuario = localStorage.getItem("cargoUsuario");
+    const mudarStatus = async (id: number, novoStatus: string) => {
+        try {
+            const response = await fetch(`${API_BASE}/eventos/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ status: novoStatus }),
+            });
 
-        if (cargoUsuario === "Admin") {
-            const eventosFiltrados = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
-            setEventos(eventosFiltrados);
-        } else {
-            const eventosFiltrados = await carregarEventos(["Em andamento", "Sem resposta", "Ajuda solicitada"]);
-            setEventos(eventosFiltrados.filter(evento => evento.cargo === cargoUsuario));
+            if (!response.ok) {
+                throw new Error("Erro ao atualizar status");
+            }
+
+            const cargoUsuario = localStorage.getItem("cargoUsuario");
+            const status = ["Em andamento", "Sem resposta", "Ajuda solicitada"];
+            let url = `${API_BASE}/eventos?status=${status.join(',')}`;
+            if (cargoUsuario !== "Admin") {
+                url += `&cargo=${cargoUsuario}`;
+            }
+
+            const updatedResponse = await fetch(url);
+            const eventosAtualizados: propEventos[] = await updatedResponse.json();
+            setEventos(eventosAtualizados);
+        } catch (error) {
+            console.error("Erro ao atualizar evento:", error);
         }
-    }
+    };
 
     return (
         <>
