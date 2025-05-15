@@ -20,21 +20,25 @@ const CompMonitorarEventos = () => {
     useEffect(() => {
         const mostrarEventos = async () => {
             try {
+                const token = localStorage.getItem("authToken");
                 const cargoUsuario = localStorage.getItem("cargoUsuario");
-                if (!cargoUsuario) return;
+                if (!token || !cargoUsuario) return;
 
                 const status = ["Em andamento", "Sem resposta", "Ajuda solicitada"];
                 let url = `${API_BASE}/eventos?status=${status.join(',')}`;
 
-                // Se n for Admin, mostra apenas os eventos do msm cargo
                 if (cargoUsuario !== "Admin") {
                     url += `&cargo=${cargoUsuario}`;
                 }
 
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error("Erro ao carregar eventos");
-                }
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) throw new Error("Erro ao carregar eventos");
+
                 const eventosCarregados: propEventos[] = await response.json();
                 setEventos(eventosCarregados);
             } catch (error) {
@@ -42,22 +46,24 @@ const CompMonitorarEventos = () => {
             }
         };
 
+
         mostrarEventos();
     }, []);
 
     const mudarStatus = async (id: number, novoStatus: string) => {
         try {
+            const token = localStorage.getItem("authToken");
+
             const response = await fetch(`${API_BASE}/eventos/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({ status: novoStatus }),
             });
 
-            if (!response.ok) {
-                throw new Error("Erro ao atualizar status");
-            }
+            if (!response.ok) throw new Error("Erro ao atualizar status");
 
             const cargoUsuario = localStorage.getItem("cargoUsuario");
             const status = ["Em andamento", "Sem resposta", "Ajuda solicitada"];
@@ -66,13 +72,19 @@ const CompMonitorarEventos = () => {
                 url += `&cargo=${cargoUsuario}`;
             }
 
-            const updatedResponse = await fetch(url);
+            const updatedResponse = await fetch(url, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
             const eventosAtualizados: propEventos[] = await updatedResponse.json();
             setEventos(eventosAtualizados);
         } catch (error) {
             console.error("Erro ao atualizar evento:", error);
         }
     };
+
 
     return (
         <>
