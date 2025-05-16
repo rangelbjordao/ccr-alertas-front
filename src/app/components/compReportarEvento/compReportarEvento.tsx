@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import Botao from "../botao/botao";
 import { useRouter } from "next/navigation";
-import { TipoDeEventoFixo } from "@/app/types/props";
-import { API_BASE, fetchComApiKey, tiposDeEventosFixos } from "@/app/services/api";
+import { TipoDeEvento } from "@/app/types/props";
+import { API_BASE, fetchComApiKey, tiposDeEventosMockados } from "@/app/services/api";
 
 const CompReportarEventos = () => {
-    const [tiposDeEventos, setTiposDeEventos] = useState<TipoDeEventoFixo[]>([]);
+    const [tiposDeEventos, setTiposDeEventos] = useState<TipoDeEvento[]>([]);
     const [erroCampos, setErroCampos] = useState({ titulo: false, descricao: false, local: false });
     const [mensagemErro, setMensagemErro] = useState("");
     const [mensagemSucesso, setMensagemSucesso] = useState("");
@@ -15,6 +15,7 @@ const CompReportarEventos = () => {
     const [local, setLocal] = useState("");
     const [descricao, setDescricao] = useState("");
     const router = useRouter();
+
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
@@ -25,7 +26,11 @@ const CompReportarEventos = () => {
     }, []);
 
     useEffect(() => {
-        setTiposDeEventos(tiposDeEventosFixos);
+        const timer = setTimeout(() => {
+            setTiposDeEventos(tiposDeEventosMockados);
+        }, 300);
+
+        return () => clearTimeout(timer);
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -51,6 +56,7 @@ const CompReportarEventos = () => {
                 local_event: local,
                 descricao: descricao
             };
+
 
             const resposta = await fetchComApiKey(`${API_BASE}/reportar-evento`, {
                 method: "POST",

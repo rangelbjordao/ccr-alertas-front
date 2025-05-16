@@ -15,7 +15,7 @@ export interface propLogins {
     cargo: string
 }
 
-export interface TipoDeEventoFixo {
+export interface TipoDeEvento {
     titulo: string;
     cargoResponsavel: string;
 }
