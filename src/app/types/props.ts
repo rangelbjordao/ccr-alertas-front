@@ -15,7 +15,7 @@ export interface propLogins {
     cargo: string
 }
 
-export interface TipoDeEvento {
+export type TipoDeEvento = {
     titulo: string;
-    cargoResponsavel: string;
-}
+    cargoResponsavel?: string;
+};

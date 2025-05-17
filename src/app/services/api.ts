@@ -2,23 +2,7 @@ import { propLogins } from "../types/props";
 
 export const API_BASE = 'http://localhost:8080';
 
-const API_KEY = "123456";
-
-export async function fetchComApiKey(url: string, options: RequestInit = {}) {
-    const headers = {
-        ...(options.headers || {}),
-        "X-API-Key": API_KEY,
-    };
-
-    console.log("Fetch com headers:", headers);
-
-    const resposta = await fetch(url, {
-        ...options,
-        headers,
-    });
-
-    return resposta;
-}
+export const API_KEY = "123456";
 
 
 export const loginsFalsos: propLogins[] = [

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Botao from "../botao/botao";
 import { useRouter } from "next/navigation";
 import { TipoDeEvento } from "@/app/types/props";
-import { API_BASE, fetchComApiKey, tiposDeEventosMockados } from "@/app/services/api";
+import { API_BASE, API_KEY } from "@/app/services/api";
 
 const CompReportarEventos = () => {
     const [tiposDeEventos, setTiposDeEventos] = useState<TipoDeEvento[]>([]);
@@ -25,13 +25,31 @@ const CompReportarEventos = () => {
         }
     }, []);
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setTiposDeEventos(tiposDeEventosMockados);
-        }, 300);
 
-        return () => clearTimeout(timer);
+    useEffect(() => {
+        const fetchTiposDeEventos = async () => {
+            try {
+                const resposta = await fetch(`${API_BASE}/tipos-evento`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-api-key": API_KEY
+                    }
+                });
+                if (resposta.ok) {
+                    const dados: TipoDeEvento[] = await resposta.json();
+                    setTiposDeEventos(dados);
+                } else {
+                    console.error("Erro ao buscar tipos de evento:", resposta.statusText);
+                }
+            } catch (error) {
+                console.error("Erro na requisição:", error);
+            }
+        };
+
+        fetchTiposDeEventos();
     }, []);
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -51,20 +69,29 @@ const CompReportarEventos = () => {
         }
 
         try {
+            const eventoSelecionado = tiposDeEventos.find(e => e.titulo === titulo);
+
+            if (!eventoSelecionado) {
+                setMensagemErro("Evento selecionado é inválido.");
+                return;
+            }
+
             const dados = {
-                typeEvent: titulo,
+                typeEvent: eventoSelecionado.titulo,
                 local_event: local,
                 descricao: descricao
             };
 
 
-            const resposta = await fetchComApiKey(`${API_BASE}/reportar-evento`, {
+            const resposta = await fetch(`${API_BASE}/reportar-evento`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "x-api-key": API_KEY
                 },
                 body: JSON.stringify(dados),
             });
+
 
             if (resposta.ok) {
                 setMensagemErro("");
@@ -103,11 +130,12 @@ const CompReportarEventos = () => {
                             className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.titulo ? 'border-2 border-red-500' : ''}`}
                         >
                             <option value="">Selecione um evento</option>
-                            {tiposDeEventos.map((evento, index) => (
-                                <option key={index} value={evento.titulo}>
+                            {tiposDeEventos.map((evento) => (
+                                <option key={evento.titulo} value={evento.titulo}>
                                     {evento.titulo.replaceAll("_", " ")}
                                 </option>
                             ))}
+
                         </select>
                     </div>
 
