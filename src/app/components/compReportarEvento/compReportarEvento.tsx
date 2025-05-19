@@ -37,7 +37,8 @@ const CompReportarEventos = () => {
                     const dados: TipoDeEvento[] = await resposta.json();
                     setTiposDeEventos(dados);
                 }
-            } catch {
+            } catch (error){
+                console.error(error)
             }
 
         };

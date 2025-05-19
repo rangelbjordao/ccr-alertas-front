@@ -1,74 +1,100 @@
 'use client'
 
-import { API_BASE } from "@/app/services/api";
+import { API_BASE, API_KEY } from "@/app/services/api";
 import { propEventos } from "@/app/types/props";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react";
 
-const CompMonitorarEventos = () => {
+interface CargoProps {
+    cargo: string;
+}
+
+const CompMonitorarEventos = ({ cargo }: CargoProps) => {
     const [eventos, setEventos] = useState<propEventos[]>([]);
     const router = useRouter();
 
-    useEffect(() => {
+    const mapearEventos = (dadosApi: any[]): propEventos[] => {
+        return dadosApi.map((evento: any) => ({
+            id: evento.id,
+            titulo: evento.typeEvent.replace(/_/g, " "),
+            descricao: evento.description,
+            local: evento.local_event,
+            data: new Date(evento.date_event).toLocaleString(),
+            cargo: evento.position,
+            status:
+                evento.status === "SEM_RESPOSTA"
+                    ? "Sem resposta"
+                    : evento.status === "EM_ANDAMENTO"
+                        ? "Em andamento"
+                        : evento.status === "FINALIZADO"
+                            ? "Resolvido"
+                            : "Ajuda solicitada",
+        }));
+    };
+
+    const mostrarEventos = useCallback(async () => {
+        if (!cargo) return;
+
         const token = localStorage.getItem("authToken");
-
-        if (!token || token.trim() === "") {
+        if (!token) {
             router.push("/login");
+            return;
         }
-    }, []);
+
+        try {
+            const url = `${API_BASE}/monitorar-eventos/${cargo === "Admin" ? "admin" : cargo}`;
+
+            const response = await fetch(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-api-key": API_KEY
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error("Erro ao carregar eventos");
+            }
+
+            const dadosApi = await response.json();
+
+            let eventosFiltrados = dadosApi;
+            if (cargo.toLowerCase() !== "admin") {
+                const normalize = (str: string) =>
+                    str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+                eventosFiltrados = dadosApi.filter(
+                    (evento: any) => normalize(evento.position) === normalize(cargo)
+                );
+            }
+
+            const eventosCarregados = mapearEventos(eventosFiltrados);
+            setEventos(eventosCarregados);
+        } catch (error) {
+            console.error("Erro ao carregar eventos:", error);
+        }
+    }, [cargo, router]);
+
 
     useEffect(() => {
-        const mostrarEventos = async () => {
-            try {
-                const cargoUsuario = localStorage.getItem("cargoUsuario");
-                if (!cargoUsuario) return;
-
-                const status = ["Em andamento", "Sem resposta", "Ajuda solicitada"];
-                let url = `${API_BASE}/eventos?status=${status.join(',')}`;
-
-                // Se n for Admin, mostra apenas os eventos do msm cargo
-                if (cargoUsuario !== "Admin") {
-                    url += `&cargo=${cargoUsuario}`;
-                }
-
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error("Erro ao carregar eventos");
-                }
-                const eventosCarregados: propEventos[] = await response.json();
-                setEventos(eventosCarregados);
-            } catch (error) {
-                console.error("Erro ao carregar eventos:", error);
-            }
-        };
-
         mostrarEventos();
-    }, []);
+    }, [mostrarEventos]);
 
-    const mudarStatus = async (id: number, novoStatus: string) => {
+
+    const mudarStatus = async (id: number) => {
         try {
-            const response = await fetch(`${API_BASE}/eventos/${id}`, {
-                method: 'PUT',
+            const response = await fetch(`${API_BASE}/monitorar-eventos/${id}`, {
+                method: "PUT",
                 headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ status: novoStatus }),
+                    "Content-Type": "application/json",
+                    "x-api-key": API_KEY
+                }
             });
 
             if (!response.ok) {
                 throw new Error("Erro ao atualizar status");
             }
 
-            const cargoUsuario = localStorage.getItem("cargoUsuario");
-            const status = ["Em andamento", "Sem resposta", "Ajuda solicitada"];
-            let url = `${API_BASE}/eventos?status=${status.join(',')}`;
-            if (cargoUsuario !== "Admin") {
-                url += `&cargo=${cargoUsuario}`;
-            }
-
-            const updatedResponse = await fetch(url);
-            const eventosAtualizados: propEventos[] = await updatedResponse.json();
-            setEventos(eventosAtualizados);
+            await mostrarEventos();
         } catch (error) {
             console.error("Erro ao atualizar evento:", error);
         }
@@ -110,26 +136,25 @@ const CompMonitorarEventos = () => {
                                 {evento.status === "Ajuda solicitada" ? (
                                     <button
                                         className="bg-blue-400 hover:bg-blue-500 px-4 py-2 rounded-md w-40"
-                                        onClick={() => mudarStatus(evento.id, "Em andamento")}
+                                        onClick={() => mudarStatus(evento.id)}
                                     >
                                         Ajudar
                                     </button>
                                 ) : evento.status === "Em andamento" ? (
                                     <button
                                         className="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-md w-40"
-                                        onClick={() => mudarStatus(evento.id, "Resolvido")}
+                                        onClick={() => mudarStatus(evento.id)}
                                     >
                                         Finalizar
                                     </button>
                                 ) : (
                                     <button
                                         className="bg-yellow-500 hover:bg-yellow-600 px-4 py-2 rounded-md w-40"
-                                        onClick={() => mudarStatus(evento.id, "Em andamento")}
+                                        onClick={() => mudarStatus(evento.id)}
                                     >
                                         Resolver
                                     </button>
-                                )
-                                }
+                                )}
                             </div>
                         </div>
                     ))}
@@ -139,4 +164,4 @@ const CompMonitorarEventos = () => {
     )
 }
 
-export default CompMonitorarEventos
+export default CompMonitorarEventos;

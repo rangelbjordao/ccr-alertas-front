@@ -32,7 +32,7 @@ const CompLogin = () => {
 
             if (usuario) {
                 localStorage.setItem("authToken", "logado");
-                localStorage.setItem("cargoUsuario", usuario.cargo);
+                localStorage.setItem("userCargo", usuario.cargo);
                 window.dispatchEvent(new Event("storage"));
                 router.push("/ccr-alertas");
             } else {

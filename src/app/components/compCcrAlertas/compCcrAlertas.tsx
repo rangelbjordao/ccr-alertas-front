@@ -2,17 +2,21 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Botao from "../botao/botao";
 
 const CompCcrAlertas = () => {
     const router = useRouter();
+    const [cargo, setCargo] = useState<string | null>(null); 
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
+        const userCargo = localStorage.getItem("userCargo");  // pegar o cargo do localStorage
 
         if (!token || token.trim() === "") {
             router.push("/login");
+        } else {
+            setCargo(userCargo);
         }
     }, []);
 
@@ -27,7 +31,7 @@ const CompCcrAlertas = () => {
                         <Botao texto="Reportar Evento" />
                     </Link>
 
-                    <Link href="/ccr-alertas/monitorar-eventos">
+                    <Link href={`/ccr-alertas/monitorar-eventos/${cargo}`}>
                         <Botao texto="Monitorar Eventos em Aberto" />
                     </Link>
 

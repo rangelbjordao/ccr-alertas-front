@@ -4,7 +4,6 @@ export const API_BASE = 'http://localhost:8080';
 
 export const API_KEY = "123456";
 
-
 export const loginsFalsos: propLogins[] = [
     {
         login: "admin",
@@ -12,19 +11,19 @@ export const loginsFalsos: propLogins[] = [
         cargo: "Admin"
     },
     {
-        login: "agente",
-        senha: "agente",
-        cargo: "Agente"
+        login: "tecnico",
+        senha: "tecnico",
+        cargo: "Tecnico"
     },
     {
         login: "manutencao",
         senha: "manutencao",
-        cargo: "Manutenção"
+        cargo: "Manutencao"
     },
     {
         login: "seguranca",
         senha: "seguranca",
-        cargo: "Segurança"
+        cargo: "Seguranca"
     },
     {
 
@@ -33,9 +32,3 @@ export const loginsFalsos: propLogins[] = [
         cargo: "Limpeza"
     }
 ]
-
-export const tiposDeEventosMockados = [
-    { titulo: "FALHA_ESCADA_ROLANTE", cargoResponsavel: "Manutenção" },
-    { titulo: "CONFLITO_PASSAGEIROS", cargoResponsavel: "Segurança" },
-    { titulo: "PROBLEMA_ILUMINACAO", cargoResponsavel: "Manutenção" },
-];
