@@ -37,8 +37,7 @@ const CompReportarEventos = () => {
                     const dados: TipoDeEvento[] = await resposta.json();
                     setTiposDeEventos(dados);
                 }
-            } catch (error) {
-                console.error("Erro ao buscar tipos de evento:", error);
+            } catch {
             }
 
         };
