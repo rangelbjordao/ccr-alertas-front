@@ -16,6 +16,6 @@ export interface propLogins {
 }
 
 export type TipoDeEvento = {
-    titulo: string;
+    type: string;
     cargoResponsavel?: string;
 };
