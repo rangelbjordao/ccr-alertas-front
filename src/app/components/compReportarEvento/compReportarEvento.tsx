@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
 import { useEffect, useState } from "react";
 import Botao from "../botao/botao";
 import { useRouter } from "next/navigation";
-import { TipoDeEvento } from "@/app/types/props";
 import { API_BASE, API_KEY } from "@/app/services/api";
+import { TipoDeEvento } from "@/app/types/props";
 
 const CompReportarEventos = () => {
     const [tiposDeEventos, setTiposDeEventos] = useState<TipoDeEvento[]>([]);
@@ -16,15 +16,12 @@ const CompReportarEventos = () => {
     const [descricao, setDescricao] = useState("");
     const router = useRouter();
 
-
     useEffect(() => {
         const token = localStorage.getItem("authToken");
-
-        if (!token || token.trim() === "") {
+        if (!token) {
             router.push("/login");
         }
     }, []);
-
 
     useEffect(() => {
         const fetchTiposDeEventos = async () => {
@@ -39,17 +36,14 @@ const CompReportarEventos = () => {
                 if (resposta.ok) {
                     const dados: TipoDeEvento[] = await resposta.json();
                     setTiposDeEventos(dados);
-                } else {
-                    console.error("Erro ao buscar tipos de evento:", resposta.statusText);
                 }
-            } catch (error) {
-                console.error("Erro na requisição:", error);
+            } catch {
+
             }
         };
 
         fetchTiposDeEventos();
     }, []);
-
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -69,19 +63,11 @@ const CompReportarEventos = () => {
         }
 
         try {
-            const eventoSelecionado = tiposDeEventos.find(e => e.titulo === titulo);
-
-            if (!eventoSelecionado) {
-                setMensagemErro("Evento selecionado é inválido.");
-                return;
-            }
-
             const dados = {
-                typeEvent: eventoSelecionado.titulo,
+                typeEvent: titulo,
                 local_event: local,
                 descricao: descricao
             };
-
 
             const resposta = await fetch(`${API_BASE}/reportar-evento`, {
                 method: "POST",
@@ -92,7 +78,6 @@ const CompReportarEventos = () => {
                 body: JSON.stringify(dados),
             });
 
-
             if (resposta.ok) {
                 setMensagemErro("");
                 setMensagemSucesso("Evento reportado com sucesso!");
@@ -100,18 +85,14 @@ const CompReportarEventos = () => {
                 setLocal("");
                 setDescricao("");
             } else {
-                const erroTexto = await resposta.text();
-                console.error("Erro:", erroTexto);
                 setMensagemErro("Erro ao enviar o evento.");
                 setMensagemSucesso("");
             }
-        } catch (error: any) {
-            console.error("Erro na requisição:", error?.message || error);
+        } catch {
             setMensagemErro("Erro ao conectar com o servidor.");
             setMensagemSucesso("");
         }
     };
-
 
     return (
         <main>
@@ -134,7 +115,6 @@ const CompReportarEventos = () => {
                                     {evento.titulo.replaceAll("_", " ")}
                                 </option>
                             ))}
-
                         </select>
                     </div>
 
