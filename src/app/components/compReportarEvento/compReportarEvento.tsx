@@ -113,7 +113,6 @@ const CompReportarEventos = () => {
     };
 
 
-
     return (
         <main>
             <h1 className="my-2 text-center text-3xl md:text-4xl font-bold">Reportar Evento</h1>
