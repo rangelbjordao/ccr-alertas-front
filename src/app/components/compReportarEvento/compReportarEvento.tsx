@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Botao from "../botao/botao";
 import { useRouter } from "next/navigation";
-import { API_BASE, API_KEY } from "@/app/services/api";
+import { API_BASE, getHeaders } from "@/app/services/api";
 import { TipoDeEvento } from "@/app/types/props";
 
 const CompReportarEventos = () => {
@@ -18,26 +18,26 @@ const CompReportarEventos = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
+
         if (!token) {
             router.push("/login");
         }
-    }, []);
+    }, [router]);
+
+
 
     useEffect(() => {
         const fetchTiposDeEventos = async () => {
             try {
                 const resposta = await fetch(`${API_BASE}/reportar-evento`, {
                     method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "x-api-key": API_KEY
-                    }
+                    headers: getHeaders(),
                 });
                 if (resposta.ok) {
                     const dados: TipoDeEvento[] = await resposta.json();
                     setTiposDeEventos(dados);
                 }
-            } catch (error){
+            } catch (error) {
                 console.error(error)
             }
 
@@ -72,10 +72,7 @@ const CompReportarEventos = () => {
 
             const resposta = await fetch(`${API_BASE}/reportar-evento`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "x-api-key": API_KEY
-                },
+                headers: getHeaders(),
                 body: JSON.stringify(dados),
             });
 

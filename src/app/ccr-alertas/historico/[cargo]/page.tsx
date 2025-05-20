@@ -1,4 +1,5 @@
-import CompHistorico from "../../components/compHistorico/compHistorico";
+import CompHistorico from "@/app/components/compHistorico/compHistorico";
+
 
 const Historico = () => {
     return (

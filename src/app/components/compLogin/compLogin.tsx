@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Botao from "../botao/botao";
-import { loginsFalsos } from "@/app/services/api";
+import { API_BASE, getHeaders } from "@/app/services/api";
+
 
 const CompLogin = () => {
     const [ro, setRo] = useState("");
@@ -13,7 +14,7 @@ const CompLogin = () => {
     const [erroCampos, setErroCampos] = useState({ ro: false, senha: false });
     const router = useRouter();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setErro("");
         setErroCampos({ ro: !ro, senha: !senha });
@@ -25,21 +26,32 @@ const CompLogin = () => {
 
         setCarregando(true);
 
-        setTimeout(() => {
-            const usuario = loginsFalsos.find(
-                (loginObj) => loginObj.login === ro && loginObj.senha === senha
-            );
+        try {
+            const response = await fetch(`${API_BASE}/login`, {
+                method: "POST",
+                headers: getHeaders(),
+                body: JSON.stringify({ username: ro, password: senha }),
+            });
 
-            if (usuario) {
+            if (response.ok) {
+                const data = await response.json();
+
                 localStorage.setItem("authToken", "logado");
-                localStorage.setItem("userCargo", usuario.cargo);
+                localStorage.setItem("userCargo", data.cargo || "Cargo desconhecido");
+
                 window.dispatchEvent(new Event("storage"));
                 router.push("/ccr-alertas");
+            } else if (response.status === 401) {
+                setErro("RO ou senha inválidos!");
             } else {
-                setErro("RO ou Senha inválida!");
+                setErro("Erro inesperado. Tente novamente mais tarde.");
             }
+        } catch (error) {
+            console.error("Erro ao conectar à API:", error);
+            setErro("Não foi possível conectar ao servidor.");
+        } finally {
             setCarregando(false);
-        }, 1000);
+        }
     };
 
     return (

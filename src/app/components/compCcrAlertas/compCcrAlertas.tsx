@@ -7,18 +7,20 @@ import Botao from "../botao/botao";
 
 const CompCcrAlertas = () => {
     const router = useRouter();
-    const [cargo, setCargo] = useState<string | null>(null); 
+    const [cargo, setCargo] = useState<string | null>(null);
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
-        const userCargo = localStorage.getItem("userCargo");  // pegar o cargo do localStorage
+        const storedCargo = localStorage.getItem("userCargo");
 
-        if (!token || token.trim() === "") {
+        if (!token || !storedCargo) {
             router.push("/login");
-        } else {
-            setCargo(userCargo);
+            return;
         }
-    }, []);
+
+        setCargo(storedCargo);
+    }, [router]);
+
 
     return (
         <>
@@ -39,7 +41,7 @@ const CompCcrAlertas = () => {
                         <Botao texto="Solicitar Ajuda" />
                     </Link>
 
-                    <Link href="/ccr-alertas/historico">
+                    <Link href={`/ccr-alertas/historico/${cargo}`}>
                         <Botao texto="Histórico" />
                     </Link>
                 </section>

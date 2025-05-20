@@ -17,10 +17,10 @@ const CompSolicitarAjuda = () => {
     useEffect(() => {
         const token = localStorage.getItem("authToken");
 
-        if (!token || token.trim() === "") {
+        if (!token) {
             router.push("/login");
         }
-    }, []);
+    }, [router]);
 
 
     const handleSubmit = async (e: React.FormEvent) => {

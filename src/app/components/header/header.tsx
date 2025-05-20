@@ -28,9 +28,11 @@ export function Header() {
 
     const handleLogout = () => {
         localStorage.removeItem("authToken");
+        localStorage.removeItem("userCargo");
         setLogado(false);
         router.push("/login");
     };
+
 
     const handleLogin = () => {
         router.push("/login");
