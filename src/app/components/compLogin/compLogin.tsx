@@ -42,7 +42,7 @@ const CompLogin = () => {
                 window.dispatchEvent(new Event("storage"));
                 router.push("/ccr-alertas");
             } else if (response.status === 401) {
-                setErro("RO ou senha inválidos!");
+                setErro("Usuário ou senha inválidos!");
             } else {
                 setErro("Erro inesperado. Tente novamente mais tarde.");
             }
@@ -63,13 +63,13 @@ const CompLogin = () => {
             <section className="flex flex-col items-center p-5 my-5 bg-neutral-400 text-white rounded-lg shadow-md max-w-11/12 mx-auto w-4xl text-center">
                 <form className="w-full max-w-md" onSubmit={handleSubmit}>
                     <div className="flex flex-col mb-4">
-                        <label htmlFor="ro" className="mb-2">RO:</label>
+                        <label htmlFor="ro" className="mb-2">Usuário:</label>
                         <input
                             type="text"
                             id="ro"
                             value={ro}
                             onChange={(e) => setRo(e.target.value)}
-                            placeholder="Digite seu RO"
+                            placeholder="Digite seu Usuário"
                             className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.ro ? "border-2 border-red-500" : ""}`}
                         />
                     </div>
