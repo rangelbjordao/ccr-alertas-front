@@ -82,7 +82,6 @@ const CompMonitorarEventos = () => {
                 );
             }
 
-            // Agora filtro status diferente de FINALIZADO
             eventosFiltrados = eventosFiltrados.filter(
                 (evento: any) => evento.status !== "FINALIZADO"
             );
@@ -100,7 +99,7 @@ const CompMonitorarEventos = () => {
         }
     }, [cargo, mostrarEventos]);
 
-    // Função para mudar status do evento
+    // Funcao para mudar status do evento
     const mudarStatus = async (id: number) => {
         try {
             const response = await fetch(`${API_BASE}/monitorar-eventos/${id}`, {
