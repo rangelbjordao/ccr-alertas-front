@@ -48,7 +48,9 @@ const CompHistorico = () => {
         if (!cargo) return;
 
         try {
-            const url = `${API_BASE}/historico/${cargo === "Admin" ? "admin" : cargo}`;
+            const isAdmin = cargo?.toLowerCase() === "admin" || cargo?.toLowerCase() === "ti";
+            const url = `${API_BASE}/historico/${isAdmin ? "admin" : cargo}`;
+
             const response = await fetch(url, {
                 headers: getHeaders(),
             });
@@ -60,7 +62,7 @@ const CompHistorico = () => {
             const dadosApi = await response.json();
 
             let eventosFiltrados = dadosApi;
-            if (cargo.toLowerCase() !== "admin") {
+            if (!isAdmin) {
                 const normalize = (str: string) =>
                     str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
@@ -68,6 +70,7 @@ const CompHistorico = () => {
                     (evento: any) => normalize(evento.position) === normalize(cargo)
                 );
             }
+
 
             setEventos(mapearEventos(eventosFiltrados));
 

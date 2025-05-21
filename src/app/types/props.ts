@@ -9,11 +9,19 @@ export interface propEventos {
     ajudaSolicitada?: boolean;
 }
 
-export interface propLogins {
-    login: string
-    senha: string
-    cargo: string
+export interface propSolicitarAjuda {
+    id: number;
+    type: string;
+    position: string;
+    status: string;
 }
+
+
+// export interface propLogins {
+//     login: string
+//     senha: string
+//     cargo: string
+// }
 
 export type TipoDeEvento = {
     type: string;
