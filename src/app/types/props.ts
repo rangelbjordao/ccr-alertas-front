@@ -17,12 +17,6 @@ export interface propSolicitarAjuda {
 }
 
 
-// export interface propLogins {
-//     login: string
-//     senha: string
-//     cargo: string
-// }
-
 export type TipoDeEvento = {
     type: string;
     cargoResponsavel?: string;

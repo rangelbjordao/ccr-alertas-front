@@ -6,25 +6,31 @@ import { useRouter } from "next/navigation";
 import { API_BASE, getHeaders } from "@/app/services/api";
 import { TipoDeEvento } from "@/app/types/props";
 
+const formatarTipoEvento = (tipo: string) => {
+    return tipo
+        .replaceAll("_", " ")
+        .toLowerCase()
+        .replace(/^./, (c) => c.toUpperCase());
+};
+
 const CompReportarEventos = () => {
+    const router = useRouter();
+
     const [tiposDeEventos, setTiposDeEventos] = useState<TipoDeEvento[]>([]);
     const [erroCampos, setErroCampos] = useState({ titulo: false, descricao: false, local: false });
     const [mensagemErro, setMensagemErro] = useState("");
     const [mensagemSucesso, setMensagemSucesso] = useState("");
-    const [titulo, setTitulo] = useState("");
-    const [local, setLocal] = useState("");
-    const [descricao, setDescricao] = useState("");
-    const router = useRouter();
+    const [titulo, setTitulo] = useState<string>("");
+    const [local, setLocal] = useState<string>("");
+    const [descricao, setDescricao] = useState<string>("");
+    const [carregando, setCarregando] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem("authToken");
-
         if (!token) {
             router.push("/login");
         }
     }, [router]);
-
-
 
     useEffect(() => {
         const fetchTiposDeEventos = async () => {
@@ -38,36 +44,43 @@ const CompReportarEventos = () => {
                     setTiposDeEventos(dados);
                 }
             } catch (error) {
-                console.error(error)
+                console.error(error);
             }
-
         };
 
         fetchTiposDeEventos();
     }, []);
 
+    const validarCampos = () => {
+        const erros = {
+            titulo: titulo.trim() === "",
+            local: local.trim() === "",
+            descricao: descricao.trim() === "",
+        };
+        setErroCampos(erros);
+
+        const temErro = Object.values(erros).some(Boolean);
+        if (temErro) {
+            setMensagemErro("Por favor, preencha todos os campos corretamente.");
+            setMensagemSucesso("");
+        }
+        return !temErro;
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const novosErros = {
-            titulo: titulo.trim() === "",
-            local: local.trim() === "",
-            descricao: descricao.trim() === ""
-        };
+        if (!validarCampos()) return;
 
-        setErroCampos(novosErros);
-
-        if (Object.values(novosErros).includes(true)) {
-            setMensagemErro("Por favor, preencha todos os campos corretamente.");
-            setMensagemSucesso("");
-            return;
-        }
+        setCarregando(true);
+        setMensagemErro("");
+        setMensagemSucesso("");
 
         try {
             const dados = {
                 typeEvent: titulo,
                 local_event: local,
-                descricao: descricao
+                descricao,
             };
 
             const resposta = await fetch(`${API_BASE}/reportar-evento`, {
@@ -77,18 +90,17 @@ const CompReportarEventos = () => {
             });
 
             if (resposta.ok) {
-                setMensagemErro("");
                 setMensagemSucesso("Evento reportado com sucesso!");
                 setTitulo("");
                 setLocal("");
                 setDescricao("");
             } else {
                 setMensagemErro("Erro ao enviar o evento.");
-                setMensagemSucesso("");
             }
         } catch {
             setMensagemErro("Erro ao conectar com o servidor.");
-            setMensagemSucesso("");
+        } finally {
+            setCarregando(false);
         }
     };
 
@@ -105,12 +117,13 @@ const CompReportarEventos = () => {
                             name="titulo-evento"
                             value={titulo}
                             onChange={(e) => setTitulo(e.target.value)}
-                            className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.titulo ? 'border-2 border-red-500' : ''}`}
+                            className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.titulo ? "border-2 border-red-500" : ""}`}
+                            disabled={carregando}
                         >
                             <option value="">-- Selecione um evento --</option>
                             {tiposDeEventos.map((evento) => (
                                 <option key={evento.type} value={evento.type}>
-                                    {evento.type.replaceAll("_", " ").toLowerCase().replace(/^./, c => c.toUpperCase())}
+                                    {formatarTipoEvento(evento.type)}
                                 </option>
                             ))}
                         </select>
@@ -124,7 +137,8 @@ const CompReportarEventos = () => {
                             name="local-evento"
                             value={local}
                             onChange={(e) => setLocal(e.target.value)}
-                            className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.local ? 'border-2 border-red-500' : ''}`}
+                            className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.local ? "border-2 border-red-500" : ""}`}
+                            disabled={carregando}
                         />
                     </div>
 
@@ -135,18 +149,19 @@ const CompReportarEventos = () => {
                             name="descricao-evento"
                             value={descricao}
                             onChange={(e) => setDescricao(e.target.value)}
-                            className={`p-2 text-black rounded-md w-11/12 h-36 resize-none bg-white mx-auto ${erroCampos.descricao ? 'border-2 border-red-500' : ''}`}
-                        ></textarea>
+                            className={`p-2 text-black rounded-md w-11/12 h-36 resize-none bg-white mx-auto ${erroCampos.descricao ? "border-2 border-red-500" : ""}`}
+                            disabled={carregando}
+                        />
                     </div>
 
                     {mensagemErro && <p className="text-red-500 font-bold">{mensagemErro}</p>}
                     {mensagemSucesso && <p className="text-blue-800 font-bold">{mensagemSucesso}</p>}
 
-                    <Botao type="submit" texto="Enviar" />
+                    <Botao type="submit" texto="Enviar" carregando={carregando} />
                 </form>
             </section>
         </main>
     );
-}
+};
 
 export default CompReportarEventos;
