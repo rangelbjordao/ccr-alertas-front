@@ -78,7 +78,7 @@ const CompHistorico = () => {
         } catch (error) {
             console.error("Erro ao carregar eventos resolvidos:", error);
         }
-    }, [cargo, router]);
+    }, [cargo]);
 
     useEffect(() => {
         if (cargo) {
