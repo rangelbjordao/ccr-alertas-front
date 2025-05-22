@@ -2,16 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Botao from "../botao/botao";
-import { propEventos } from "@/app/types/props";
+import { propSolicitarAjuda } from "@/app/types/props";
 import { useRouter } from "next/navigation";
+import { API_BASE, getHeaders } from "@/app/services/api";
 
 const CompSolicitarAjuda = () => {
-    const [eventoSelecionado, setEventoSelecionado] = useState("");
+    const [eventoSelecionado, setEventoSelecionado] = useState<number | "">("");
     const [descricaoAjuda, setDescricaoAjuda] = useState("");
     const [erroCampos, setErroCampos] = useState({ evento: false, descricao: false });
     const [mensagemErro, setMensagemErro] = useState("");
     const [mensagemSucesso, setMensagemSucesso] = useState("");
-    const [eventos, setEventos] = useState<propEventos[]>([]);
+    const [eventos, setEventos] = useState<propSolicitarAjuda[]>([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -19,8 +20,35 @@ const CompSolicitarAjuda = () => {
 
         if (!token) {
             router.push("/login");
+            return;
         }
     }, [router]);
+
+
+    const fetchEventos = async () => {
+        try {
+            const resposta = await fetch(`${API_BASE}/solicitar-ajuda`, {
+                headers: getHeaders()
+            });
+
+            if (!resposta.ok) {
+                const textoErro = await resposta.text();
+                console.error("Erro na resposta da API:", textoErro);
+                return;
+            }
+
+            const dados = await resposta.json();
+            setEventos(dados);
+
+
+        } catch (erro) {
+            console.error("Erro ao buscar eventos:", erro);
+        }
+    };
+
+    useEffect(() => {
+        fetchEventos();
+    }, []);
 
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -38,7 +66,36 @@ const CompSolicitarAjuda = () => {
             setMensagemSucesso("");
             return;
         }
-    }
+
+        try {
+            const resposta = await fetch(`${API_BASE}/solicitar-ajuda/${eventoSelecionado}`, {
+                method: "PUT",
+                headers: getHeaders(),
+                body: JSON.stringify({
+                    descricao: descricaoAjuda
+                })
+            });
+
+            if (resposta.ok) {
+                setMensagemSucesso("Ajuda solicitada com sucesso!");
+                setMensagemErro("");
+                setDescricaoAjuda("");
+                setEventoSelecionado("");
+                fetchEventos();
+            }
+            else {
+                const textoErro = await resposta.text(); // <-- Adicione isso
+                console.error("Erro ao solicitar ajuda:", textoErro); // <-- E isso
+                setMensagemErro("Erro ao solicitar ajuda.");
+                setMensagemSucesso("");
+            }
+        } catch (erro) {
+            console.error("Erro na requisição:", erro);
+            setMensagemErro("Erro inesperado ao solicitar ajuda.");
+            setMensagemSucesso("");
+        }
+    };
+
 
     return (
         <main>
@@ -53,17 +110,16 @@ const CompSolicitarAjuda = () => {
                             id="selecionar-evento"
                             name="selecionar-evento"
                             value={eventoSelecionado}
-                            onChange={(e) => setEventoSelecionado(e.target.value)}
+                            onChange={(e) => setEventoSelecionado(e.target.value === "" ? "" : Number(e.target.value))}
                             className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.evento ? 'border-2 border-red-500' : ''}`}
                         >
                             <option value="">-- Selecione um evento --</option>
                             {eventos.map((evento) => (
                                 <option key={evento.id} value={evento.id}>
-                                    {evento.titulo} - {evento.data}
+                                    {evento.type.replaceAll("_", " ")} - {evento.position}
                                 </option>
                             ))}
                         </select>
-
                     </div>
 
                     <div className="flex flex-col mb-4">
