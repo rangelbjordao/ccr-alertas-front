@@ -85,8 +85,10 @@ const CompMonitorarEventos = () => {
             eventosFiltrados = eventosFiltrados.filter(
                 (evento: any) => evento.status !== "FINALIZADO"
             );
+            const eventosMapeados = mapearEventos(eventosFiltrados);
+            const eventosOrdenados = eventosMapeados.slice().sort((a, b) => b.id - a.id);
+            setEventos(eventosOrdenados);
 
-            setEventos(mapearEventos(eventosFiltrados));
         } catch (error) {
             console.error("Erro ao carregar eventos:", error);
         }
@@ -146,21 +148,12 @@ const CompMonitorarEventos = () => {
                                 {evento.titulo}
                             </h3>
 
-                            <p className="m-2">
-                                <strong>Cargo:</strong> {evento.cargo}
-                            </p>
-                            <p className="m-2">
-                                <strong>Local:</strong> {evento.local}
-                            </p>
-                            <p className="m-2">
-                                <strong>Descrição:</strong> {evento.descricao}
-                            </p>
-                            <p className="m-2">
-                                <strong>Data:</strong> {evento.data}
-                            </p>
-                            <p className="m-2">
-                                <strong>Status:</strong> {evento.status}
-                            </p>
+                            <h4 className="mb-2"><strong>#{evento.id}</strong></h4>
+                            <p className="m-2"><strong>Cargo:</strong> {evento.cargo}</p>
+                            <p className="m-2"><strong>Local:</strong> {evento.local}</p>
+                            <p className="m-2"><strong>Descrição:</strong> {evento.descricao}</p>
+                            <p className="m-2"><strong>Data:</strong> {evento.data}</p>
+                            <p className="m-2"><strong>Status:</strong> {evento.status}</p>
 
                             <div className="flex flex-wrap justify-center gap-2 mt-3">
                                 {evento.status === "Ajuda solicitada" ? (

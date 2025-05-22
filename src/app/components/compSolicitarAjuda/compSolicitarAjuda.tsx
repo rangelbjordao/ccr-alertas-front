@@ -84,8 +84,8 @@ const CompSolicitarAjuda = () => {
                 fetchEventos();
             }
             else {
-                const textoErro = await resposta.text(); // <-- Adicione isso
-                console.error("Erro ao solicitar ajuda:", textoErro); // <-- E isso
+                const textoErro = await resposta.text();
+                console.error("Erro ao solicitar ajuda:", textoErro);
                 setMensagemErro("Erro ao solicitar ajuda.");
                 setMensagemSucesso("");
             }
@@ -115,11 +115,16 @@ const CompSolicitarAjuda = () => {
                         >
                             <option value="">-- Selecione um evento --</option>
                             {eventos.map((evento) => (
-                                <option key={evento.id} value={evento.id}>
-                                    {evento.type.replaceAll("_", " ")} - {evento.position}
+                                <option
+                                    key={evento.id}
+                                    value={evento.id}
+                                >
+                                    #{evento.id} - {evento.type.replaceAll("_", " ").toLowerCase().replace(/^./, c => c.toUpperCase())}
                                 </option>
+
                             ))}
                         </select>
+
                     </div>
 
                     <div className="flex flex-col mb-4">

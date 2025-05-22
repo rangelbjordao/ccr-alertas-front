@@ -107,10 +107,10 @@ const CompReportarEventos = () => {
                             onChange={(e) => setTitulo(e.target.value)}
                             className={`p-2 text-black rounded-md w-11/12 bg-white mx-auto ${erroCampos.titulo ? 'border-2 border-red-500' : ''}`}
                         >
-                            <option value="">Selecione um evento</option>
+                            <option value="">-- Selecione um evento --</option>
                             {tiposDeEventos.map((evento) => (
                                 <option key={evento.type} value={evento.type}>
-                                    {evento.type.replaceAll("_", " ")}
+                                    {evento.type.replaceAll("_", " ").toLowerCase().replace(/^./, c => c.toUpperCase())}
                                 </option>
                             ))}
                         </select>
