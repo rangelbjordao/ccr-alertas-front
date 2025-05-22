@@ -6,12 +6,6 @@ import { useRouter } from "next/navigation";
 import { API_BASE, getHeaders } from "@/app/services/api";
 import { TipoDeEvento } from "@/app/types/props";
 
-const formatarTipoEvento = (tipo: string) => {
-    return tipo
-        .replaceAll("_", " ")
-        .toLowerCase()
-        .replace(/^./, (c) => c.toUpperCase());
-};
 
 const CompReportarEventos = () => {
     const router = useRouter();
@@ -123,7 +117,7 @@ const CompReportarEventos = () => {
                             <option value="">-- Selecione um evento --</option>
                             {tiposDeEventos.map((evento) => (
                                 <option key={evento.type} value={evento.type}>
-                                    {formatarTipoEvento(evento.type)}
+                                    {evento.type.replaceAll("_", " ").toLowerCase().replace(/^./, c => c.toUpperCase())}
                                 </option>
                             ))}
                         </select>
