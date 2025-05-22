@@ -1,11 +1,11 @@
 'use client'
 
 import { API_BASE, getHeaders } from "@/app/services/api";
-import { propEventos } from "@/app/types/props";
+import { EventoApi, propEventos } from "@/app/types/props";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 
-const mapearEventos = (dadosApi: any[]): propEventos[] => {
+const mapearEventos = (dadosApi: EventoApi[]): propEventos[] => {
     return dadosApi.map((evento) => ({
         id: evento.id,
         titulo: evento.typeEvent.replace(/_/g, " "),
@@ -69,11 +69,11 @@ const CompMonitorarEventos = () => {
                     str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
                 dadosApi = dadosApi.filter(
-                    (evento: any) => normalize(evento.position) === normalize(cargo)
+                    (evento: EventoApi) => normalize(evento.position) === normalize(cargo)
                 );
             }
 
-            const eventosAtivos = dadosApi.filter((evento: any) => evento.status !== "FINALIZADO");
+            const eventosAtivos = dadosApi.filter((evento: EventoApi) => evento.status !== "FINALIZADO");
 
             const eventosMapeados = mapearEventos(eventosAtivos);
 

@@ -1,4 +1,5 @@
-import CompReportarEventos from "../../components/compReportarEvento/compReportarEvento";
+import CompReportarEventos from "@/app/components/compReportarEvento/compReportarEvento";
+
 
 const ReportarEventos = () => {
     return (

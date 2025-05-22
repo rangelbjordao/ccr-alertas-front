@@ -16,8 +16,17 @@ export interface propSolicitarAjuda {
     status: string;
 }
 
-
 export type TipoDeEvento = {
     type: string;
     cargoResponsavel?: string;
+};
+
+export type EventoApi = {
+    id: number;
+    typeEvent: string;
+    description: string;
+    local_event: string;
+    date_event: string;
+    position: string;
+    status: "SEM_RESPOSTA" | "EM_ANDAMENTO" | "AJUDA_SOLICITADA" | "FINALIZADO";
 };

@@ -1,7 +1,7 @@
 'use client'
 
 import { API_BASE, getHeaders } from "@/app/services/api";
-import { propEventos } from "@/app/types/props";
+import { EventoApi, propEventos } from "@/app/types/props";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
@@ -11,8 +11,8 @@ const CompHistorico = () => {
     const router = useRouter();
 
     // Funcao para ajustar dados da API
-    const mapearEventos = (dadosApi: any[]): propEventos[] => {
-        return dadosApi.map((evento: any) => ({
+    const mapearEventos = (dadosApi: EventoApi[]): propEventos[] => {
+        return dadosApi.map((evento) => ({
             id: evento.id,
             titulo: evento.typeEvent.replace(/_/g, " "),
             descricao: evento.description,
@@ -67,7 +67,7 @@ const CompHistorico = () => {
                     str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
                 eventosFiltrados = dadosApi.filter(
-                    (evento: any) => normalize(evento.position) === normalize(cargo)
+                    (evento: EventoApi) => normalize(evento.position) === normalize(cargo)
                 );
             }
 
