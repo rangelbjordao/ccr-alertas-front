@@ -17,7 +17,7 @@ O projeto visa facilitar a troca de informações em tempo real, garantindo maio
 
 
 ### Link do Site:
-[https://ccr-alertas.vercel.app](https://ccr-alertas.vercel.app)
+[https://ccr-alertas-three.vercel.app/](https://ccr-alertas-three.vercel.app/)
 
 ### 🔑 Credenciais Padrão
 
