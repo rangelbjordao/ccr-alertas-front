@@ -74,7 +74,7 @@ const CompIntegrantes = () => {
                             <p className="mb-2.5">RM: 560547</p>
                             <p className="mb-2.5">Turma: 1TDSPA</p>
                             <a
-                                href="https://www.linkedin.com/in/rangel-jord%C3%A3o-819334234/"
+                                href="https://www.linkedin.com/in/rangel-bernardi-jord%C3%A3o-819334234/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-blue-600 text-5xl hover:text-blue-800 transition mt-2 inline-block"
