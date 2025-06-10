@@ -74,7 +74,7 @@ const CompHistorico = () => {
                 throw new Error("Erro ao carregar eventos resolvidos");
             }
 
-            const dadosApi = await response.json();
+            const dadosApi: EventoApi[] = await response.json();
 
             let eventosFiltrados = dadosApi;
             if (!isAdmin) {
@@ -85,6 +85,8 @@ const CompHistorico = () => {
                     (evento: EventoApi) => normalize(evento.position) === normalize(cargo)
                 );
             }
+
+            eventosFiltrados = eventosFiltrados.filter(evento => evento.status === "FINALIZADO");
 
             const eventosMapeados = mapearEventos(eventosFiltrados);
             const eventosOrdenados = eventosMapeados.slice().sort((a, b) => b.id - a.id);
