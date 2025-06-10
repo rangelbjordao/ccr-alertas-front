@@ -10,7 +10,22 @@ const CompHistorico = () => {
     const [cargo, setCargo] = useState<string | null>(null);
     const router = useRouter();
 
-    // Funcao para ajustar dados da API
+
+    const formatarStatus = (status: string): "Sem resposta" | "Resolvido" | "Em andamento" | "Ajuda solicitada" => {
+        switch (status) {
+            case "SEM_RESPOSTA":
+                return "Sem resposta";
+            case "FINALIZADO":
+                return "Resolvido";
+            case "EM_ANDAMENTO":
+                return "Em andamento";
+            case "AJUDA_SOLICITADA":
+                return "Ajuda solicitada";
+            default:
+                return "Sem resposta";
+        }
+    };
+
     const mapearEventos = (dadosApi: EventoApi[]): propEventos[] => {
         return dadosApi.map((evento) => ({
             id: evento.id,
@@ -25,7 +40,7 @@ const CompHistorico = () => {
                 minute: "2-digit",
             }),
             cargo: evento.position,
-            status: "Resolvido",
+            status: formatarStatus(evento.status)
         }));
     };
 
