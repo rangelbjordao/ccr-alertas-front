@@ -15,6 +15,10 @@ O projeto visa facilitar a troca de informações em tempo real, garantindo maio
 
 ## 🖥️ Como Utilizar o Sistema
 
+
+### Link do Site:
+[https://ccr-alertas.vercel.app](https://ccr-alertas.vercel.app)
+
 ### 🔑 Credenciais Padrão
 
 Para acessar o sistema, utilize as seguintes credenciais:
